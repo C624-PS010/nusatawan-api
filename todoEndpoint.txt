@@ -1,0 +1,39 @@
+Authentication:
+POST /auth/register
+POST /auth/login
+
+Articles:
+GET /articles?category, search
+POST /articles
+GET /articles/:id
+DELETE /articles/:id
+POST /articles/comments
+DELETE /articles/comments/:id
+
+Campaign:
+GET /campaigns
+POST /campaigns
+GET /campaigns/:id
+DELETE /campaigns/:id
+
+User:
+GET /users?isAdmin
+POST /users
+GET /user/:id
+PUT /user/:id
+PATCH /user/:id
+DELETE /user/:id
+
+RESPONSE BERHASIL:
+{
+    error:
+    message:
+    data:{
+
+    }
+}
+RESPONSE GAGAL:
+{
+    "error": true,
+    "message": "Data not found"
+}

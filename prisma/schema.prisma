@@ -13,8 +13,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Test {
-  id      Int @id @default(autoincrement())
-  name    String
-  age     Int
+model User {
+  id       String  @id @default(uuid())
+  username String
+  email    String
+  phone    String
+  isAdmin  Boolean
+
+  articles  Article[] // Relasi one-to-many Article
+  campaigns Campaign[] // Relasi one-to-many Campaign
+  comments  Comment[] // Relasi one-to-many Comment
+}
+
+model Article {
+  id        String    @id @default(uuid())
+  title     String    @db.VarChar(255)
+  content   String
+  image     String
+  reaction  Int
+  createdAt DateTime  @default(now())
+
+  userId    String // Foreign key
+  user      User      @relation(fields: [userId], references: [id])
+  
+  comments  Comment[] // Relasi one-to-many Comment
+
+  category Category[]
+}
+
+model Campaign {
+  id        String   @id @default(uuid())
+  title     String   @db.VarChar(255)
+  content   String
+  image     String
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  comment String @db.VarChar(100)
+
+  userId  String
+  user    User   @relation(fields: [userId], references: [id]) // Relasi one-to-many User
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id]) // Relasi one-to-many Article
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String @db.VarChar(25)
+ 
+  articles Article[]
 }
