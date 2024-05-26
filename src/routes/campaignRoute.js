@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const campaignController = require("../controller/campaignController");
+const campaignInputValidation = require("../middleware/campaignInputValidation");
 
 const router = Router();
 
@@ -8,5 +9,8 @@ router.get("/", campaignController.getCampaign);
 
 // GET by ID
 router.get("/:id", campaignController.getCampaignById);
+
+// POST
+router.post("/", campaignInputValidation, campaignController.addCampaign);
 
 module.exports = router;

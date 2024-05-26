@@ -45,7 +45,20 @@ const findCampaignById = async (id) => {
   return data;
 };
 
+const createCampaign = async (newCampaignData) => {
+  return await campaign.create({
+    data: {
+      title: newCampaignData.title,
+      content: newCampaignData.content,
+      image: newCampaignData.image,
+      createdAt: new Date(),
+      userId: newCampaignData.userId,
+    },
+  });
+};
+
 module.exports = {
   findAllCampaign,
   findCampaignById,
+  createCampaign,
 };

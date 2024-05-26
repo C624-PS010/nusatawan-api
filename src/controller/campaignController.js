@@ -1,4 +1,4 @@
-const { findAllCampaign, findCampaignById } = require("../model/campaignModel");
+const { findAllCampaign, findCampaignById, createCampaign } = require("../model/campaignModel");
 const successResponse = require("../helper/successResponse");
 
 const campaignController = {
@@ -18,6 +18,16 @@ const campaignController = {
       const campaign = await findCampaignById(id);
 
       res.status(200).json(successResponse(campaign));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  addCampaign: async (req, res, next) => {
+    try {
+      const newUser = await createCampaign(req.body);
+
+      res.status(201).json(successResponse(newUser, "Campaign added successfully"));
     } catch (error) {
       next(error);
     }
