@@ -21,6 +21,27 @@ const findAllCampaign = async () => {
   });
 };
 
+const findCampaignById = async (id) => {
+  return await campaign.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      image: true,
+      createdAt: true,
+      user: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
+};
+
 module.exports = {
   findAllCampaign,
+  findCampaignById,
 };
