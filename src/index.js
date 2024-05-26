@@ -27,4 +27,4 @@ app.use("/users", userRoute);
 app.use(errorHandler);
 
 // Listen
-const server = app.listen(3000, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
+const server = app.listen(port, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
