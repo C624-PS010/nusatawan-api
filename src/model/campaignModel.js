@@ -22,7 +22,7 @@ const findAllCampaign = async () => {
 };
 
 const findCampaignById = async (id) => {
-  return await campaign.findUnique({
+  const data = await campaign.findUnique({
     where: {
       id: id,
     },
@@ -39,6 +39,10 @@ const findCampaignById = async (id) => {
       },
     },
   });
+
+  if (!data) throw new NotFoundError("User id not found");
+
+  return data;
 };
 
 module.exports = {

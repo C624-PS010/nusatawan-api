@@ -1,4 +1,4 @@
-const { findAllCampaign,findCampaignById } = require("../model/campaignModel");
+const { findAllCampaign, findCampaignById } = require("../model/campaignModel");
 const successResponse = require("../helper/successResponse");
 
 const campaignController = {
