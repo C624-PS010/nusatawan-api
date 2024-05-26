@@ -1,108 +1,121 @@
-// prisma/seeder.js
+// File: prisma/seeder.js
 
 const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcryptjs"); // Untuk mengenkripsi password
 const prisma = new PrismaClient();
-const dotenv = require("dotenv");
-dotenv.config();
 
 async function main() {
-  // Buat pengguna (users)
-  const user1 = await prisma.user.create({
-    data: {
-      username: "user1",
-      email: "user1@example.com",
-      password: "222",
-      phone: "+1234567890",
-      isAdmin: false,
-    },
-  });
+  try {
+    // Enkripsi password
+    const hashedPassword = await bcrypt.hash("password123", 10);
 
-  const user2 = await prisma.user.create({
-    data: {
-      username: "user2",
-      email: "user2@example.com",
-      password: "222",
-      phone: "+1987654321",
-      isAdmin: true,
-    },
-  });
+    // Menambahkan data pengguna (Users)
+    const user1 = await prisma.user.create({
+      data: {
+        username: "user1",
+        email: "user1@example.com",
+        password: hashedPassword,
+        phone: "+1234567890",
+        isAdmin: false,
+      },
+    });
 
-  // Buat artikel (articles)
-  const article1 = await prisma.article.create({
-    data: {
-      title: "Article 1",
-      content: "Content of article 1",
-      image: "https://example.com/image1.jpg",
-      userId: user1.id,
-    },
-  });
+    const user2 = await prisma.user.create({
+      data: {
+        username: "user2",
+        email: "user2@example.com",
+        password: hashedPassword,
+        phone: "+1987654321",
+        isAdmin: true,
+      },
+    });
 
-  const article2 = await prisma.article.create({
-    data: {
-      title: "Article 2",
-      content: "Content of article 2",
-      image: "https://example.com/image2.jpg",
-      userId: user2.id,
-    },
-  });
+    console.log("Seeder: Data pengguna berhasil ditambahkan");
 
-  // Buat kampanye (campaigns)
-  const campaign1 = await prisma.campaign.create({
-    data: {
-      title: "Campaign 1",
-      content: "Content of campaign 1",
-      image: "https://example.com/campaign1.jpg",
-      userId: user1.id,
-    },
-  });
+    // Menambahkan data artikel (Articles)
+    const article1 = await prisma.article.create({
+      data: {
+        title: "Artikel 1",
+        content: "Ini adalah konten dari artikel 1.",
+        image: "https://example.com/image1.jpg",
+        userId: user1.id,
+      },
+    });
 
-  const campaign2 = await prisma.campaign.create({
-    data: {
-      title: "Campaign 2",
-      content: "Content of campaign 2",
-      image: "https://example.com/campaign2.jpg",
-      userId: user2.id,
-    },
-  });
+    const article2 = await prisma.article.create({
+      data: {
+        title: "Artikel 2",
+        content: "Ini adalah konten dari artikel 2.",
+        image: "https://example.com/image2.jpg",
+        userId: user2.id,
+      },
+    });
 
-  // Buat komentar (comments)
-  const comment1 = await prisma.comment.create({
-    data: {
-      comment: "Comment on Article 1",
-      userId: user2.id,
-      articleId: article1.id,
-    },
-  });
+    console.log("Seeder: Data artikel berhasil ditambahkan");
 
-  const comment2 = await prisma.comment.create({
-    data: {
-      comment: "Comment on Article 2",
-      userId: user1.id,
-      articleId: article2.id,
-    },
-  });
+    // Menambahkan data kampanye (Campaigns)
+    await prisma.campaign.createMany({
+      data: [
+        {
+          title: "Kampanye 1",
+          content: "Ini adalah konten dari kampanye 1.",
+          image: "https://example.com/campaign1.jpg",
+          userId: user1.id,
+        },
+        {
+          title: "Kampanye 2",
+          content: "Ini adalah konten dari kampanye 2.",
+          image: "https://example.com/campaign2.jpg",
+          userId: user2.id,
+        },
+      ],
+    });
 
-  // Buat kategori (categories)
-  const category1 = await prisma.category.create({
-    data: {
-      name: "Technology",
-    },
-  });
+    console.log("Seeder: Data kampanye berhasil ditambahkan");
 
-  const category2 = await prisma.category.create({
-    data: {
-      name: "Politics",
-    },
-  });
+    // Menambahkan data komentar (Comments)
+    await prisma.comment.createMany({
+      data: [
+        {
+          comment: "Komentar artikel 1.",
+          userId: user1.id,
+          articleId: article1.id,
+        },
+        {
+          comment: "Komentar artikel 2.",
+          userId: user2.id,
+          articleId: article2.id,
+        },
+      ],
+    });
 
-  console.log("Seeder executed successfully.");
+    console.log("Seeder: Data komentar berhasil ditambahkan");
+
+    // Menambahkan data kategori (Categories)
+    await prisma.category.createMany({
+      data: [
+        {
+          name: "Teknologi",
+        },
+        {
+          name: "Bisnis",
+        },
+        {
+          name: "Hiburan",
+        },
+      ],
+    });
+
+    console.log("Seeder: Data kategori berhasil ditambahkan");
+  } catch (error) {
+    console.error("Seeder error:", error);
+    throw error; // Anda bisa memilih untuk melempar kembali kesalahan untuk mengetahui permasalahan yang ada
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

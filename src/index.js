@@ -6,6 +6,7 @@ dotenv.config();
 
 // Routes & middleware
 const userRoute = require("./routes/userRoute");
+const campaignRoute = require("./routes/campaignRoute");
 const errorHandler = require("./middleware/errorHandler");
 
 // APP
@@ -22,9 +23,10 @@ app.get("/", (req, res) => {
   res.send("Express  is running");
 });
 app.use("/users", userRoute);
+app.use("/campaigns", campaignRoute);
 
 // Error handler last middleware
 app.use(errorHandler);
 
 // Listen
-const server = app.listen(3000, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
+const server = app.listen(port, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
