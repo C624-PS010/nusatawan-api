@@ -34,6 +34,7 @@ const findCampaignById = async (id) => {
       createdAt: true,
       user: {
         select: {
+          id: true,
           username: true,
         },
       },
