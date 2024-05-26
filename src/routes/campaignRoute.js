@@ -13,4 +13,7 @@ router.get("/:id", campaignController.getCampaignById);
 // POST
 router.post("/", campaignInputValidation, campaignController.addCampaign);
 
+// DELETE
+router.delete("/:id", campaignController.removeCampaign);
+
 module.exports = router;

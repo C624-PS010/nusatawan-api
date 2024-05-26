@@ -40,7 +40,7 @@ const findCampaignById = async (id) => {
     },
   });
 
-  if (!data) throw new NotFoundError("User id not found");
+  if (!data) throw new NotFoundError("Campaign id not found");
 
   return data;
 };
@@ -57,8 +57,23 @@ const createCampaign = async (newCampaignData) => {
   });
 };
 
+const deleteCampaign = async (id) => {
+  const findId = await findCampaignById(id);
+
+  if (!findId) throw new NotFoundError("Campaign id not found");
+
+  const data = await campaign.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return data;
+};
+
 module.exports = {
   findAllCampaign,
   findCampaignById,
   createCampaign,
+  deleteCampaign,
 };
