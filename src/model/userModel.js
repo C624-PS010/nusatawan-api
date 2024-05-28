@@ -1,10 +1,15 @@
 const nusawatawan = require("../db/nusatawanDB");
 const { NotFoundError, BadRequestError } = require("../helper/customError");
+const { encrypt, decrypt } = require("../helper/encryption");
 
 const user = nusawatawan.user;
 
 const findAllUser = async () => {
   return await user.findMany();
+};
+
+const findAllUserAdmin = async () => {
+  return await user.findMany({ where: { isAdmin: true } });
 };
 
 const findUserById = async (id) => {
@@ -15,16 +20,17 @@ const findUserById = async (id) => {
   return data;
 };
 
-const findUserByEmail = async (email) => {
-  const data = await user.findFirst({ where: { email } });
+const findUserByEmailPassword = async (email, password) => {
+  const data = await user.findUnique({ where: { email } });
 
-  if (!data) throw new NotFoundError("User email not found");
+  if (!data || !decrypt(password, data.password))
+    throw new NotFoundError("Incorrect email or password");
 
   return data;
 };
 
 const findDuplicateEmail = async (email) => {
-  const data = await user.findFirst({ where: { email } });
+  const data = await user.findUnique({ where: { email } });
   return data ? true : false;
 };
 
@@ -36,10 +42,18 @@ const createUser = async (newUserData) => {
     data: {
       username: newUserData.username,
       email: newUserData.email,
-      password: newUserData.password,
+      password: encrypt(newUserData.password),
       phone: newUserData.phone,
-      isAdmin: newUserData.isAdmin,
     },
+  });
+};
+
+const updateUserAdmin = async (id, isAdmin) => {
+  await findUserById(id);
+
+  return await user.update({
+    where: { id },
+    data: { isAdmin },
   });
 };
 
@@ -52,7 +66,10 @@ const deleteUser = async (id) => {
 
 module.exports = {
   findAllUser,
+  findAllUserAdmin,
   findUserById,
+  findUserByEmailPassword,
   createUser,
+  updateUserAdmin,
   deleteUser,
 };

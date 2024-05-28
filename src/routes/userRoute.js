@@ -1,17 +1,18 @@
 const { Router } = require("express");
 const userController = require("../controller/userController");
-const userInputValidation = require("../middleware/userInputValidation");
+const { authenticate } = require("../middleware/checkAuth");
+const roleInputValidation = require("../middleware/roleInputValidation");
 
 const router = Router();
 
 // GET
-router.get("/", userController.getUsers);
-router.get("/:id", userController.getUserById);
+router.get("/", authenticate, userController.getUsers);
+router.get("/:id", authenticate, userController.getUserById);
 
-// POST
-router.post("/", userInputValidation, userController.addUser);
+// PATCH
+router.patch("/role/:id", authenticate, roleInputValidation, userController.changeUserRole);
 
 // DELETE
-router.delete("/:id", userController.removeUser);
+router.delete("/:id", authenticate, userController.removeUser);
 
 module.exports = router;

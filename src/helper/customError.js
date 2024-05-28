@@ -18,16 +18,16 @@ class BadRequestError extends CustomError {
   }
 }
 
-class AunothorizedError extends CustomError {
+class UnauthorizedError extends CustomError {
   constructor(message = "Unauthorized access") {
-    super(400, message);
+    super(401, message);
   }
 }
 
 class ForbiddenError extends CustomError {
   constructor(message = "Forbidden access") {
-    super(400, message);
+    super(403, message);
   }
 }
 
-module.exports = { NotFoundError, BadRequestError };
+module.exports = { NotFoundError, BadRequestError, UnauthorizedError, ForbiddenError };
