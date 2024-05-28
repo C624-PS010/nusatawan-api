@@ -6,8 +6,8 @@ const loginSchema = z.object({
       message: "Email must be string",
     })
     .min(1, { message: "Email is required" })
-    .max(25, {
-      message: "Username length exceed limit (25 characters)",
+    .max(50, {
+      message: "Email length exceed limit (25 characters)",
     })
     .email(),
 
