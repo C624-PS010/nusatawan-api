@@ -10,7 +10,7 @@ const authController = {
 
       const token = generateToken(newUser.id);
 
-      res.cookie("jwt", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+      res.cookie("user-token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
 
       res.status(201).json(successResponse(newUser, `User has been successfully registered`));
     } catch (error) {
