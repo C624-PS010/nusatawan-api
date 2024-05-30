@@ -18,11 +18,9 @@ DELETE /campaigns/:id
 
 User:
 GET /users?isAdmin
-POST /users
-GET /user/:id
-PUT /user/:id
-PATCH /user/:id
-DELETE /user/:id
+GET /users/:id
+PATCH /users/role/:id
+DELETE /users/:id
 
 RESPONSE BERHASIL:
 {
