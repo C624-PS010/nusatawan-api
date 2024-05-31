@@ -34,7 +34,6 @@ model Article {
   title     String   @db.VarChar(50)
   content   String   @db.VarChar(5000)
   image     String   @db.VarChar(255)
-  like      Int      @default(1)
   createdAt DateTime @default(now())
 
   userId String // Foreign key
