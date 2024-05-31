@@ -25,7 +25,22 @@ const findArticleById = async (id) => {
   return foundArticle;
 };
 
+const createArticle = async (newArticleData) => {
+  console.log(newArticleData);
+  return await article.create({
+    data: {
+      title: newArticleData.title,
+      content: newArticleData.content,
+      image: newArticleData.image,
+      location: newArticleData.location,
+      createdAt: new Date(),
+      userId: newArticleData.userId,
+    },
+  });
+};
+
 module.exports = {
   findAllArticle,
   findArticleById,
+  createArticle,
 };
