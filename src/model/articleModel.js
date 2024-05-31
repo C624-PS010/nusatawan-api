@@ -11,6 +11,21 @@ const findAllArticle = async () => {
   });
 };
 
+const findArticleById = async (id) => {
+  const foundArticle = await article.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!foundArticle) {
+    throw new NotFoundError("Article not found");
+  }
+
+  return foundArticle;
+};
+
 module.exports = {
   findAllArticle,
+  findArticleById,
 };

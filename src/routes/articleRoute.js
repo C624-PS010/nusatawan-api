@@ -6,4 +6,7 @@ const router = Router();
 // GET
 router.get("/", articleController.getArticle);
 
+// GET by ID
+router.get("/:id", articleController.getArticleById);
+
 module.exports = router;
