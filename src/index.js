@@ -8,6 +8,7 @@ dotenv.config();
 // Routes & middleware
 const userRoute = require("./routes/userRoute");
 const campaignRoute = require("./routes/campaignRoute");
+const articleRoute = require("./routes/articleRoute");
 const authRoute = require("./routes/authRoute");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 });
 app.use("/users", userRoute);
 app.use("/campaigns", campaignRoute);
+app.use("/articles", articleRoute);
 app.use("/auth", authRoute);
 
 // Error handler last middleware
