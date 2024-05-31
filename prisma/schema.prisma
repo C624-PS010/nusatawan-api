@@ -34,6 +34,7 @@ model Article {
   title     String   @db.VarChar(50)
   content   String   @db.VarChar(5000)
   image     String   @db.VarChar(255)
+  location  String   @db.VarChar(100) @default("Indonesia")
   createdAt DateTime @default(now())
 
   userId String // Foreign key
