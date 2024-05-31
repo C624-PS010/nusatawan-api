@@ -18,6 +18,9 @@ const findAllCampaign = async () => {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 
