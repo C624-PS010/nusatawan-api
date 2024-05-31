@@ -1,29 +1,26 @@
 const { BadRequestError } = require("../helper/customError");
+const campaignSchema = require("../schema/campaignSchema");
+const upload = require("../helper/multerConfig")("campaigns"); // Sesuaikan 'campaigns' dengan nama folder yang Anda inginkan
 
-const campaignInputValidation = async (req, res, next) => {
-  const { title, content, image, userId } = req.body;
+const campaignInputValidation = (req, res, next) => {
+  // Gunakan multer untuk menangani form-data dan file upload
+  upload.single("image")(req, res, function (err) {
+    if (err) {
+      return next(new BadRequestError("File upload error: " + err.message));
+    }
 
-  // Validasi jika semua field ada
-  if (!title || !content || !image || !userId) {
-    return next(new BadRequestError("All fields are required"));
-  }
+    let { title, content, userId } = req.body;
+    const image = req.file ? req.file.path : req.body.image;
 
-  // Validasi panjang title
-  if (title.length > 50) {
-    return next(new BadRequestError("Title length exceed limit (25 characters)"));
-  }
+    const campaignData = { title, content, image, userId };
 
-  // Validasi panjang content
-  if (content.length > 5000) {
-    return next(new BadRequestError("Content length exceed limit (25 characters)"));
-  }
-
-  // Validasi panjang image
-  if (image.length > 255) {
-    return next(new BadRequestError("Image length exceed limit (25 characters)"));
-  }
-
-  next();
+    try {
+      campaignSchema.parse(campaignData);
+      next();
+    } catch (error) {
+      next(new BadRequestError(error.errors[0].message || "Validation failed", error.message));
+    }
+  });
 };
 
 module.exports = campaignInputValidation;
