@@ -1,7 +1,7 @@
 // File: prisma/seeder.js
 
 const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs"); // Untuk mengenkripsi password
+const bcrypt = require("bcrypt"); // Untuk mengenkripsi password
 const prisma = new PrismaClient();
 
 async function main() {

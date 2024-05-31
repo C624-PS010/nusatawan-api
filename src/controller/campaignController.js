@@ -30,9 +30,11 @@ const campaignController = {
 
   addCampaign: async (req, res, next) => {
     try {
-      const newUser = await createCampaign(req.body);
-
-      res.status(201).json(successResponse(newUser, "Campaign added successfully"));
+      console.log(req.file);
+      const { title, content, userId } = req.body;
+      const image = req.file ? req.file.path : "null"; // get the uploaded file path
+      const newCampaign = await createCampaign({ title, content, image, userId });
+      res.status(201).json(successResponse(newCampaign, "Campaign added successfully"));
     } catch (error) {
       next(error);
     }
