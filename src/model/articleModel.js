@@ -39,8 +39,19 @@ const createArticle = async (newArticleData) => {
   });
 };
 
+const deleteArticle = async (id) => {
+  const data = await article.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return data;
+};
+
 module.exports = {
   findAllArticle,
   findArticleById,
   createArticle,
+  deleteArticle,
 };

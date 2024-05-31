@@ -1,4 +1,9 @@
-const { findAllArticle, findArticleById, createArticle } = require("../model/articleModel");
+const {
+  findAllArticle,
+  findArticleById,
+  createArticle,
+  deleteArticle,
+} = require("../model/articleModel");
 const successResponse = require("../helper/successResponse");
 
 const articleController = {
@@ -29,6 +34,19 @@ const articleController = {
       const image = req.file ? req.file.path : "null"; // get the uploaded file path
       const newArticle = await createArticle({ title, content, image, location, userId });
       res.status(201).json(successResponse(newArticle, "Article added successfully"));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  removeArticle: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      // menunggu fungsi findArticleById selesai
+      const data = await findArticleById(id);
+      // menunggu fungsi deleteArticle selesai
+      await deleteArticle(id);
+      res.status(200).json(successResponse(data, "Article deleted successfully"));
     } catch (error) {
       next(error);
     }

@@ -12,4 +12,7 @@ router.get("/:id", articleController.getArticleById);
 
 // POST
 router.post("/", articleInputValidation, articleController.addArticle);
+
+// DELETE
+router.delete("/:id", articleController.removeArticle);
 module.exports = router;
