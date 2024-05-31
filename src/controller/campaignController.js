@@ -2,7 +2,7 @@ const {
   findAllCampaign,
   findCampaignById,
   createCampaign,
-  deleteCampaign,
+  removeCampaign,
 } = require("../model/campaignModel");
 const successResponse = require("../helper/successResponse");
 
@@ -43,7 +43,7 @@ const campaignController = {
   removeCampaign: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deletedCampaign = await deleteCampaign(id);
+      const deletedCampaign = await removeCampaign(id);
 
       res.status(200).json(successResponse(deletedCampaign, "Campaign deleted successfully"));
     } catch (error) {

@@ -38,6 +38,7 @@ async function main() {
         title: "Artikel 1",
         content: "Ini adalah konten dari artikel 1.",
         image: "https://example.com/image1.jpg",
+        location: "Jakarta",
         userId: user1.id,
       },
     });
@@ -47,6 +48,7 @@ async function main() {
         title: "Artikel 2",
         content: "Ini adalah konten dari artikel 2.",
         image: "https://example.com/image2.jpg",
+        location: "Bandung",
         userId: user2.id,
       },
     });
