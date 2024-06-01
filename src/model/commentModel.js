@@ -22,6 +22,17 @@ const findAllCommentByArticleId = async (articleId) => {
   });
 };
 
+const createComment = async (newCommentData) => {
+  return await comment.create({
+    data: {
+      comment: newCommentData.comment,
+      articleId: newCommentData.articleId,
+      userId: newCommentData.userId,
+      createdAt: new Date(),
+    },
+  });
+};
+
 // const findArticleById = async (id) => {
 //   const foundArticle = await article.findUnique({
 //     where: {
@@ -63,7 +74,6 @@ const findAllCommentByArticleId = async (articleId) => {
 module.exports = {
   findAllComment,
   findAllCommentByArticleId,
-  //   findArticleById,
-  //   createArticle,
+  createComment,
   //   deleteArticle,
 };
