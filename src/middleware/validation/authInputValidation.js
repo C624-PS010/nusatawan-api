@@ -1,6 +1,6 @@
-const { BadRequestError } = require("../helper/customError");
-const registerSchema = require("../schema/registerSchema");
-const loginSchema = require("../schema/loginSchema");
+const { BadRequestError } = require("../../helper/customError");
+const registerSchema = require("../../schema/registerSchema");
+const loginSchema = require("../../schema/loginSchema");
 
 const registerInputValidation = (req, res, next) => {
   const { username, email, password, phone } = req.body;

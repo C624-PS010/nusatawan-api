@@ -1,5 +1,5 @@
 const { z } = require("zod");
-const { BadRequestError } = require("../helper/customError");
+const { BadRequestError } = require("../../helper/customError");
 
 const schema = z.boolean({
   message: "Value must be boolean (true/false)",

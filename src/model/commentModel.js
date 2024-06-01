@@ -1,40 +1,34 @@
 const nusatawanDB = require("../db/nusatawanDB");
-const { NotFoundError, BadRequestError } = require("../helper/customError");
+const { findArticleById } = require("./articleModel");
+const { findUserById } = require("./userModel");
 
 const comment = nusatawanDB.comment;
 
-const findAllComment = async () => {
-  return await comment.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-};
-
 const findAllCommentByArticleId = async (articleId) => {
+  await findArticleById(articleId);
+
   return await comment.findMany({
-    where: {
-      articleId,
-    },
     orderBy: {
       createdAt: "desc",
     },
   });
 };
 
-const createComment = async (newCommentData) => {
+const createComment = async ({ comment, articleId, userId }) => {
+  await findArticleById(articleId);
+  await findUserById(userId);
+
   return await comment.create({
     data: {
-      comment: newCommentData.comment,
-      articleId: newCommentData.articleId,
-      userId: newCommentData.userId,
+      comment: comment,
+      articleId: articleId,
+      userId: userId,
       createdAt: new Date(),
     },
   });
 };
 
 module.exports = {
-  findAllComment,
   findAllCommentByArticleId,
   createComment,
 };

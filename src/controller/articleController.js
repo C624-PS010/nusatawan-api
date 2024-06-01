@@ -1,15 +1,18 @@
 const {
-  findAllArticle,
+  findFilteredArticle,
   findArticleById,
   createArticle,
   deleteArticle,
 } = require("../model/articleModel");
+const { findAllCommentByArticleId } = require("../model/commentModel");
 const successResponse = require("../helper/successResponse");
 
 const articleController = {
   getArticle: async (req, res, next) => {
     try {
-      const articles = await findAllArticle();
+      const { search, filter } = req.query;
+
+      const articles = await findFilteredArticle(search, filter);
 
       res.status(200).json(successResponse(articles));
     } catch (error) {
@@ -17,12 +20,32 @@ const articleController = {
     }
   },
 
+  // getArticleSearch: async (req, res, next) => {
+  //   try {
+  //     const searchTerm = req.query.search; // Mendapatkan nilai dari query parameter 'search'
+  //     console.log(searchTerm);
+  //     // Lakukan pencarian berdasarkan search term di sini
+  //     const searchResult = await findAllArticle({
+  //       where: {
+  //         location: {
+  //           search: searchTerm,
+  //         },
+  //       },
+  //     });
+
+  //     res.status(200).json(successResponse(searchResult)); // Mengirimkan hasil pencarian sebagai respons
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // },
+
   getArticleById: async (req, res, next) => {
     try {
       const { id } = req.params;
       const article = await findArticleById(id);
+      const comment = await findAllCommentByArticleId(id);
 
-      res.status(200).json(successResponse(article));
+      res.status(200).json(successResponse({ article, comment }));
     } catch (error) {
       next(error);
     }

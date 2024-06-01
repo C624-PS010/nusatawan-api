@@ -1,5 +1,5 @@
-const { BadRequestError } = require("../helper/customError");
-const commentSchema = require("../schema/commentSchema");
+const { BadRequestError } = require("../../helper/customError");
+const commentSchema = require("../../schema/commentSchema");
 
 const commentInputValidation = (req, res, next) => {
   const { id: articleId } = req.params;
