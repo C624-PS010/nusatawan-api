@@ -33,47 +33,8 @@ const createComment = async (newCommentData) => {
   });
 };
 
-// const findArticleById = async (id) => {
-//   const foundArticle = await article.findUnique({
-//     where: {
-//       id,
-//     },
-//   });
-
-//   if (!foundArticle) {
-//     throw new NotFoundError("Article not found");
-//   }
-
-//   return foundArticle;
-// };
-
-// const createArticle = async (newArticleData) => {
-//   console.log(newArticleData);
-//   return await article.create({
-//     data: {
-//       title: newArticleData.title,
-//       content: newArticleData.content,
-//       image: newArticleData.image,
-//       location: newArticleData.location,
-//       createdAt: new Date(),
-//       userId: newArticleData.userId,
-//     },
-//   });
-// };
-
-// const deleteArticle = async (id) => {
-//   const data = await article.delete({
-//     where: {
-//       id: id,
-//     },
-//   });
-
-//   return data;
-// };
-
 module.exports = {
   findAllComment,
   findAllCommentByArticleId,
   createComment,
-  //   deleteArticle,
 };
