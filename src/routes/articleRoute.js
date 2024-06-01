@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const articleController = require("../controller/articleController");
-const articleInputValidation = require("../middleware/articleInputValidation");
+const articleInputValidation = require("../middleware/articleinputValidation");
+const commentController = require("../controller/commentController");
+const { commentInputValidation } = require("../middleware/commentInputValidation");
 
 const router = Router();
 
@@ -15,4 +17,11 @@ router.post("/", articleInputValidation, articleController.addArticle);
 
 // DELETE
 router.delete("/:id", articleController.removeArticle);
+
+// COMMENT
+// GET comment by article ID
+router.get("/:id/comments", commentController.getCommentByArticleId);
+
+// POST comment
+router.post("/:id/comments", commentInputValidation, commentController.addComment);
 module.exports = router;
