@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const campaignController = require("../controller/campaignController");
-const campaignInputValidation = require("../middleware/campaignInputValidation");
-const { authenticate } = require("../middleware/checkAuth");
+const campaignInputValidation = require("../middleware/validation/campaignInputValidation");
 
 const router = Router();
 
@@ -12,9 +11,9 @@ router.get("/", campaignController.getCampaign);
 router.get("/:id", campaignController.getCampaignById);
 
 // POST
-router.post("/", authenticate, campaignInputValidation, campaignController.addCampaign);
+router.post("/", campaignInputValidation, campaignController.addCampaign);
 
 // DELETE
-router.delete("/:id", authenticate, campaignController.removeCampaign);
+router.delete("/:id", campaignController.removeCampaign);
 
 module.exports = router;

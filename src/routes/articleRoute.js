@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const articleController = require("../controller/articleController");
-const articleInputValidation = require("../middleware/articleinputValidation");
+const articleInputValidation = require("../middleware/validation/articleinputValidation");
 const commentController = require("../controller/commentController");
-const { commentInputValidation } = require("../middleware/commentInputValidation");
+const { commentInputValidation } = require("../middleware/validation/commentInputValidation");
 
 const router = Router();
 

@@ -34,7 +34,7 @@ model Article {
   title     String   @db.VarChar(50)
   content   String   @db.VarChar(5000)
   image     String   @db.VarChar(255)
-  location  String   @db.VarChar(100) @default("Indonesia")
+  location  String   @default("Indonesia") @db.VarChar(100)
   createdAt DateTime @default(now())
 
   userId String // Foreign key
@@ -75,7 +75,7 @@ model Comment {
 
 model Category {
   id   String @id @default(uuid())
-  name String @db.VarChar(50)
+  name String @unique @db.VarChar(50)
 
   // Relasi many-to-many Article
   articles Article[]

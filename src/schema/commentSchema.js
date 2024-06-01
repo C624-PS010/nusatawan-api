@@ -8,7 +8,7 @@ const commentSchema = z.object({
     })
     .trim()
     .min(1, { message: "Comment is required." })
-    .max(50, { message: "Comment length exceeds limit (50 characters)" }),
+    .max(150, { message: "Comment length exceeds limit (150 characters)" }),
 
   userId: z
     .string({

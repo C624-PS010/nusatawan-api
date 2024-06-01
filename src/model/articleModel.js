@@ -1,5 +1,5 @@
 const nusatawanDB = require("../db/nusatawanDB");
-const { NotFoundError, BadRequestError } = require("../helper/customError");
+const { NotFoundError } = require("../helper/customError");
 
 const article = nusatawanDB.article;
 
@@ -7,6 +7,21 @@ const findAllArticle = async () => {
   return await article.findMany({
     orderBy: {
       createdAt: "desc",
+    },
+  });
+};
+
+const findFilteredArticle = async (search, filter) => {
+  if (!search && !filter) return await findAllArticle();
+  if (search) search = search.toLowerCase();
+  if (filter) filter = filter.toLowerCase();
+
+  return await article.findMany({
+    where: {
+      title: {
+        startsWith: search,
+      },
+      location: filter,
     },
   });
 };
@@ -51,6 +66,7 @@ const deleteArticle = async (id) => {
 
 module.exports = {
   findAllArticle,
+  findFilteredArticle,
   findArticleById,
   createArticle,
   deleteArticle,

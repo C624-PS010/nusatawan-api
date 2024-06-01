@@ -24,7 +24,7 @@ const commentController = {
       const comments = await findAllCommentByArticleId(id);
 
       if (comments.length === 0) {
-        return next(new NotFoundError("Comment not found"));
+        return res.status(200).json(successResponse(comments));
       } else {
         return res.status(200).json(successResponse(comments));
       }

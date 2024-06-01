@@ -4,7 +4,8 @@
   "description": "REST API proyek website Nusatawan",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "seed": "node prisma/seeder.js"

@@ -1,6 +1,6 @@
-const { BadRequestError } = require("../helper/customError");
-const campaignSchema = require("../schema/campaignSchema");
-const upload = require("../helper/multerConfig")("campaigns"); // Sesuaikan 'campaigns' dengan nama folder yang Anda inginkan
+const { BadRequestError } = require("../../helper/customError");
+const campaignSchema = require("../../schema/campaignSchema");
+const upload = require("../../helper/multerConfig")("campaigns"); // Sesuaikan 'campaigns' dengan nama folder yang Anda inginkan
 
 const campaignInputValidation = (req, res, next) => {
   // Gunakan multer untuk menangani form-data dan file upload
