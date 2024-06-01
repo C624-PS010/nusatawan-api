@@ -1,5 +1,6 @@
 const { findAllComment, findAllCommentByArticleId } = require("../model/commentModel");
 const successResponse = require("../helper/successResponse");
+const { NotFoundError } = require("../helper/customError");
 
 const commentController = {
   getComment: async (req, res, next) => {
@@ -21,10 +22,7 @@ const commentController = {
       const comments = await findAllCommentByArticleId(id);
 
       if (comments.length === 0) {
-        return res.status(404).json({
-          status: "error",
-          message: "Comment not found",
-        });
+        return next(new NotFoundError("Comment not found"));
       } else {
         return res.status(200).json(successResponse(comments));
       }
