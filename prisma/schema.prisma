@@ -29,6 +29,14 @@ model User {
   comments  Comment[]
 }
 
+model Category {
+  name  String @id @unique @db.VarChar(25)
+  image String @db.VarChar(100)
+
+  // Relasi many-to-many Article
+  articles Article[]
+}
+
 model Article {
   id        String   @id @default(uuid())
   title     String   @db.VarChar(50)
@@ -37,14 +45,14 @@ model Article {
   location  String   @default("Indonesia") @db.VarChar(100)
   createdAt DateTime @default(now())
 
-  userId String // Foreign key
+  categoryName String //Foreign key category
+  category     Category @relation(fields: [categoryName], references: [name])
+
+  userId String // Foreign key user
   user   User   @relation(fields: [userId], references: [id])
 
   // Relasi one-to-many Comment
   comments Comment[]
-
-  // Relasi many-to-many Category 
-  category Category[]
 }
 
 model Campaign {
@@ -71,11 +79,4 @@ model Comment {
   articleId String
   article   Article  @relation(fields: [articleId], references: [id])
   createdAt DateTime @default(now())
-}
-
-model Category {
-  name String @id @unique @db.VarChar(25)
-
-  // Relasi many-to-many Article
-  articles Article[]
 }

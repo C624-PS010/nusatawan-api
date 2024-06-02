@@ -10,10 +10,10 @@ const articleInputValidation = (req, res, next) => {
       return next(new BadRequestError("File upload error: " + err.message));
     }
 
-    let { title, content, location, userId } = req.body;
+    let { title, content, location, categoryName, userId } = req.body;
     const image = req.file ? req.file.path : "null"; // Ganti req.body.image dengan null jika tidak ada file ter-upload
 
-    const articleData = { title, content, image, location, userId };
+    const articleData = { title, content, image, location, categoryName, userId };
 
     try {
       // Validasi data artikel dengan schema

@@ -25,10 +25,4 @@ router.get("/:id/comments", commentController.getCommentByArticleId);
 // POST comment
 router.post("/:id/comments", commentInputValidation, commentController.addComment);
 
-// GET article category
-router.get("/:id/category");
-
-// POST category
-router.post("/:id/category");
-
 module.exports = router;

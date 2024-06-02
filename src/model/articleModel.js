@@ -1,20 +1,18 @@
 const nusatawanDB = require("../db/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
+const { findCategoryByName } = require("./categoryModel");
 
 const article = nusatawanDB.article;
 
 const findAllArticle = async () => {
   return await article.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
   });
 };
 
 const findFilteredArticle = async (search, filter) => {
   if (!search && !filter) return await findAllArticle();
-  if (search) search = search.toLowerCase();
-  if (filter) filter = filter.toLowerCase();
 
   return await article.findMany({
     where: {
@@ -31,6 +29,10 @@ const findArticleById = async (id) => {
     where: {
       id,
     },
+    include: {
+      category: true,
+      user: true,
+    },
   });
 
   if (!foundArticle) {
@@ -41,7 +43,8 @@ const findArticleById = async (id) => {
 };
 
 const createArticle = async (newArticleData) => {
-  console.log(newArticleData);
+  await findCategoryByName(newArticleData.categoryName);
+
   return await article.create({
     data: {
       title: newArticleData.title,
@@ -49,6 +52,7 @@ const createArticle = async (newArticleData) => {
       image: newArticleData.image,
       location: newArticleData.location,
       createdAt: new Date(),
+      categoryName: newArticleData.categoryName,
       userId: newArticleData.userId,
     },
   });

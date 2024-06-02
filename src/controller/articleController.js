@@ -6,6 +6,7 @@ const {
 } = require("../model/articleModel");
 const { findAllCommentByArticleId } = require("../model/commentModel");
 const successResponse = require("../helper/successResponse");
+const { findCategoriesByArticleId } = require("../model/categoryModel");
 
 const articleController = {
   // Article controllers
@@ -35,9 +36,16 @@ const articleController = {
 
   addArticle: async (req, res, next) => {
     try {
-      const { title, content, location, userId } = req.body;
+      const { title, content, location, categoryName, userId } = req.body;
       const image = req.file ? req.file.path : "null"; // get the uploaded file path
-      const newArticle = await createArticle({ title, content, image, location, userId });
+      const newArticle = await createArticle({
+        title,
+        content,
+        image,
+        location,
+        categoryName,
+        userId,
+      });
       res.status(201).json(successResponse(newArticle, "Article added successfully"));
     } catch (error) {
       next(error);
@@ -52,15 +60,6 @@ const articleController = {
       // menunggu fungsi deleteArticle selesai
       await deleteArticle(id);
       res.status(200).json(successResponse(data, "Article deleted successfully"));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  // Article category controllers
-  getArticleCategory: async (req, res, next) => {
-    try {
-      const { id } = req.params;
     } catch (error) {
       next(error);
     }
