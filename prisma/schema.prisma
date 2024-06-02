@@ -68,8 +68,8 @@ model Campaign {
 }
 
 model Comment {
-  id      String @id @default(uuid())
-  comment String @db.VarChar(300)
+  id   String @id @default(uuid())
+  body String @db.VarChar(300)
 
   // Relasi one-to-many User
   userId String

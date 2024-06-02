@@ -21,6 +21,8 @@ const findFilteredArticle = async (search, filter) => {
       },
       location: filter,
     },
+    include: { category: true },
+    orderBy: { createdAt: "desc" },
   });
 };
 
@@ -32,6 +34,7 @@ const findArticleById = async (id) => {
     include: {
       category: true,
       user: true,
+      comments: true,
     },
   });
 

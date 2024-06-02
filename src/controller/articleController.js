@@ -4,9 +4,7 @@ const {
   createArticle,
   deleteArticle,
 } = require("../model/articleModel");
-const { findAllCommentByArticleId } = require("../model/commentModel");
 const successResponse = require("../helper/successResponse");
-const { findCategoriesByArticleId } = require("../model/categoryModel");
 
 const articleController = {
   // Article controllers
@@ -26,9 +24,8 @@ const articleController = {
     try {
       const { id } = req.params;
       const article = await findArticleById(id);
-      const comment = await findAllCommentByArticleId(id);
 
-      res.status(200).json(successResponse({ article, comment }));
+      res.status(200).json(successResponse(article));
     } catch (error) {
       next(error);
     }

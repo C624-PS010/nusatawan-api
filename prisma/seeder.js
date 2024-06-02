@@ -96,12 +96,12 @@ async function main() {
     await prisma.comment.createMany({
       data: [
         {
-          comment: "Komentar artikel 1.",
+          body: "Komentar artikel 1.",
           userId: user1.id,
           articleId: article1.id,
         },
         {
-          comment: "Komentar artikel 2.",
+          body: "Komentar artikel 2.",
           userId: user2.id,
           articleId: article2.id,
         },

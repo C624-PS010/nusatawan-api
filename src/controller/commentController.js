@@ -37,8 +37,6 @@ const commentController = {
       const { id: articleId } = req.params;
       const { comment, userId } = req.body;
 
-      console.log(articleId, comment, userId);
-
       const newComment = await createComment({ articleId, comment, userId });
 
       res.status(201).json(successResponse(newComment));
