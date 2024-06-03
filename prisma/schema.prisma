@@ -27,6 +27,7 @@ model User {
   campaigns Campaign[]
   // Relasi one-to-many Comment
   comments  Comment[]
+  Rating    Rating[]
 }
 
 model Article {
@@ -45,6 +46,7 @@ model Article {
 
   // Relasi many-to-many Category 
   category Category[]
+  Rating   Rating[]
 }
 
 model Campaign {
@@ -79,4 +81,15 @@ model Category {
 
   // Relasi many-to-many Article
   articles Article[]
+}
+
+model Rating {
+  id        String  @id @default(uuid())
+  rating    Int
+  // Relasi one-to-many User
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  // articleId
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id])
 }
