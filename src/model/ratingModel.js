@@ -29,8 +29,35 @@ const findAllRatingByArticleId = async (articleId) => {
   });
 };
 
+// check if user already rated the article
+const findUserRating = async (articleId, userId) => {
+  return await rating.findFirst({
+    where: {
+      articleId,
+      userId,
+    },
+  });
+};
+
+const createRating = async (articleId, ratingValue, userId) => {
+  try {
+    return await rating.create({
+      data: {
+        articleId,
+        rating: ratingValue,
+        userId,
+      },
+    });
+  } catch (error) {
+    console.error(`Error creating rating for article ${articleId} by user ${userId}:`, error);
+    throw error;
+  }
+};
+
 module.exports = {
   findAllRatingByArticleId,
   findTotalUserRating,
   findAverageRating,
+  findUserRating,
+  createRating,
 };

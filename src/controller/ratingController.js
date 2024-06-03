@@ -3,6 +3,8 @@ const {
   findAllRatingByArticleId,
   findAverageRating,
   findTotalUserRating,
+  findUserRating,
+  createRating,
 } = require("../model/ratingModel");
 
 const ratingController = {
@@ -40,6 +42,36 @@ const ratingController = {
       res
         .status(200)
         .json(successResponse(totalUserRating, "Success get total user rating by article id"));
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // POST a new rating for a specific article by ID
+  addRating: async (req, res, next) => {
+    try {
+      const articleId = req.params.id;
+      const { rating, userId } = req.body;
+
+      // Check if rating is between 1 and 5
+      if (rating < 1 || rating > 5) {
+        return res.status(400).json(successResponse([], "Rating must be between 1 and 5"));
+      }
+
+      // Check if user already rated the article
+      const userRating = await findUserRating(articleId, userId);
+      if (userRating) {
+        return res.status(400).json(successResponse([], "User already rated this article"));
+      }
+
+      // Create a new rating
+      await createRating(articleId, rating, userId);
+
+      return res.status(201).json({
+        success: true,
+        message: "Successfully added new rating",
+        data: { articleId, rating, userId },
+      });
     } catch (error) {
       next(error);
     }
