@@ -10,7 +10,6 @@ const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const campaignRoute = require("./routes/campaignRoute");
 const articleRoute = require("./routes/articleRoute");
-const authRoute = require("./routes/authRoute");
 const ratingRoute = require("./routes/ratingRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const errorHandler = require("./middleware/errorHandler");
@@ -42,5 +41,3 @@ app.use(errorHandler);
 
 // Listen
 const server = app.listen(port, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
-
-// TODOS

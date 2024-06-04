@@ -8,9 +8,7 @@ const findAllCommentByArticleId = async (articleId) => {
   await findArticleById(articleId);
 
   return await comment.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
   });
 };
 

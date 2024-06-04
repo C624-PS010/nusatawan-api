@@ -10,7 +10,6 @@ const successResponse = require("../helper/successResponse");
 const userController = {
   getUsers: async (req, res, next) => {
     try {
-      console.log(req.query);
       const { isAdmin } = req.query;
 
       const users = isAdmin === true ? await findAllUserAdmin() : await findAllUser();
