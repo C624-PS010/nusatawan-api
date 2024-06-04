@@ -51,7 +51,7 @@ model Article {
   category     Category @relation(fields: [categoryName], references: [name])
 
   userId String // Foreign key user
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Relasi one-to-many Comment
   comments Comment[]
@@ -69,7 +69,7 @@ model Campaign {
 
   // Relasi one-to-many User
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
@@ -78,11 +78,11 @@ model Comment {
 
   // Relasi one-to-many User
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Relasi one-to-many Article
   articleId String
-  article   Article  @relation(fields: [articleId], references: [id])
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 }
 
@@ -92,9 +92,9 @@ model Rating {
 
   // Relasi one-to-many User
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // articleId
   articleId String
-  article   Article @relation(fields: [articleId], references: [id])
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
 }
