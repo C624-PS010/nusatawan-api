@@ -32,6 +32,21 @@ async function main() {
 
     console.log("Seeder: Data pengguna berhasil ditambahkan");
 
+    // Menambahkan data kategori (Categories)
+    await prisma.category.createMany({
+      data: [
+        { name: "ekowisata", image: "public\\images\\categories\\ekowisata.jpg" },
+        { name: "pantai", image: "public\\images\\categories\\pantai.jpg" },
+        { name: "gunung", image: "public\\images\\categories\\gunung.jpg" },
+        { name: "laut", image: "public\\images\\categories\\laut.jpg" },
+        { name: "seni", image: "public\\images\\categories\\seni.jpg" },
+        { name: "religi", image: "public\\images\\categories\\religi.jpg" },
+        { name: "sejarah", image: "public\\images\\categories\\sejarah.jpg" },
+      ],
+    });
+
+    console.log("Seeder: Data kategori berhasil ditambahkan");
+
     // Menambahkan data artikel (Articles)
     const article1 = await prisma.article.create({
       data: {
@@ -39,6 +54,7 @@ async function main() {
         content: "Ini adalah konten dari artikel 1.",
         image: "https://example.com/image1.jpg",
         location: "Jakarta",
+        categoryName: "ekowisata",
         userId: user1.id,
       },
     });
@@ -49,6 +65,7 @@ async function main() {
         content: "Ini adalah konten dari artikel 2.",
         image: "https://example.com/image2.jpg",
         location: "Bandung",
+        categoryName: "ekowisata",
         userId: user2.id,
       },
     });
@@ -79,12 +96,12 @@ async function main() {
     await prisma.comment.createMany({
       data: [
         {
-          comment: "Komentar artikel 1.",
+          body: "Komentar artikel 1.",
           userId: user1.id,
           articleId: article1.id,
         },
         {
-          comment: "Komentar artikel 2.",
+          body: "Komentar artikel 2.",
           userId: user2.id,
           articleId: article2.id,
         },
@@ -92,23 +109,6 @@ async function main() {
     });
 
     console.log("Seeder: Data komentar berhasil ditambahkan");
-
-    // Menambahkan data kategori (Categories)
-    await prisma.category.createMany({
-      data: [
-        {
-          name: "Teknologi",
-        },
-        {
-          name: "Bisnis",
-        },
-        {
-          name: "Hiburan",
-        },
-      ],
-    });
-
-    console.log("Seeder: Data kategori berhasil ditambahkan");
   } catch (error) {
     console.error("Seeder error:", error);
     throw error; // Anda bisa memilih untuk melempar kembali kesalahan untuk mengetahui permasalahan yang ada

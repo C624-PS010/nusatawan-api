@@ -24,4 +24,5 @@ router.get("/:id/comments", commentController.getCommentByArticleId);
 
 // POST comment
 router.post("/:id/comments", commentInputValidation, commentController.addComment);
+
 module.exports = router;
