@@ -10,6 +10,8 @@ const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const campaignRoute = require("./routes/campaignRoute");
 const articleRoute = require("./routes/articleRoute");
+const authRoute = require("./routes/authRoute");
+const ratingRoute = require("./routes/ratingRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -31,6 +33,8 @@ app.use("/users", userRoute);
 app.use("/auth", authRoute);
 app.use("/campaigns", campaignRoute);
 app.use("/articles", articleRoute);
+app.use("/ratings", ratingRoute);
+app.use("/auth", authRoute);
 app.use("/categories", categoryRoute);
 
 // Error handler last middleware
