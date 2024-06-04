@@ -34,7 +34,10 @@ const articleController = {
   addArticle: async (req, res, next) => {
     try {
       const { title, content, location, categoryName, userId } = req.body;
-      const image = req.file ? req.file.path : "null"; // get the uploaded file path
+
+      const image = req.file
+        ? req.file.destination.replace(/^public\//, "") + "/" + req.file.filename
+        : "null"; // get the uploaded file path
       const newArticle = await createArticle({
         title,
         content,
