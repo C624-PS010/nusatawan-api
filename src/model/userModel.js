@@ -1,8 +1,8 @@
-const nusawatawan = require("../db/nusatawanDB");
+const nusatawanDB = require("../db/nusatawanDB");
 const { NotFoundError, BadRequestError } = require("../helper/customError");
 const { encrypt, decrypt } = require("../helper/encryption");
 
-const user = nusawatawan.user;
+const user = nusatawanDB.user;
 
 const findAllUser = async () => {
   return await user.findMany();
@@ -59,9 +59,14 @@ const updateUserAdmin = async (id, isAdmin) => {
 
 const deleteUser = async (id) => {
   await findUserById(id);
-  const data = await user.delete({ where: { id } });
 
-  return data;
+  // Remove constraint
+  await nusatawanDB.comment.deleteMany({ where: { userId: id } });
+  await nusatawanDB.rating.deleteMany({ where: { userId: id } });
+  await nusatawanDB.article.deleteMany({ where: { userId: id } });
+  await nusatawanDB.campaign.deleteMany({ where: { userId: id } });
+
+  return await user.delete({ where: { id } });
 };
 
 module.exports = {

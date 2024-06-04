@@ -1,51 +1,66 @@
 const nusatawanDB = require("../db/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
 const { findCategoryByName } = require("./categoryModel");
+const { findUserById } = require("./userModel");
 
 const article = nusatawanDB.article;
 
 const findAllArticle = async () => {
-  return await article.findMany({
-    include: { category: true },
+  const data = await article.findMany({
+    include: { category: true, user: true },
     orderBy: { createdAt: "desc" },
   });
+
+  return data.map((article) => ({
+    ...article,
+    category: article.category.name,
+    user: article.user.username,
+  }));
 };
 
 const findFilteredArticle = async (search, filter) => {
   if (!search && !filter) return await findAllArticle();
 
-  return await article.findMany({
+  const data = await article.findMany({
     where: {
-      title: {
-        startsWith: search,
-      },
-      location: filter,
+      title: { startsWith: search },
+      category: { name: filter },
     },
-    include: { category: true },
+    include: { category: true, user: true },
     orderBy: { createdAt: "desc" },
   });
+
+  return data.map((article) => ({
+    ...article,
+    category: article.category.name,
+    user: article.user.username,
+  }));
 };
 
 const findArticleById = async (id) => {
-  const foundArticle = await article.findUnique({
-    where: {
-      id,
-    },
+  const data = await article.findUnique({
+    where: { id },
     include: {
       category: true,
-      user: true,
+      user: {
+        select: { id: true, username: true, email: true, phone: true },
+      },
       comments: true,
     },
   });
 
-  if (!foundArticle) {
+  if (!data) {
     throw new NotFoundError("Article not found");
   }
 
-  return foundArticle;
+  return {
+    ...data,
+    category: data.category.name,
+  };
 };
 
 const createArticle = async (newArticleData) => {
+  await findUserById(newArticleData.userId);
   await findCategoryByName(newArticleData.categoryName);
 
   return await article.create({
@@ -62,13 +77,13 @@ const createArticle = async (newArticleData) => {
 };
 
 const deleteArticle = async (id) => {
-  const data = await article.delete({
-    where: {
-      id: id,
-    },
-  });
+  await findArticleById(id);
 
-  return data;
+  // Remove constraint
+  await nusatawanDB.comment.deleteMany({ where: { articleId: id } });
+  await nusatawanDB.rating.deleteMany({ where: { articleId: id } });
+
+  return await article.delete({ where: { id } });
 };
 
 module.exports = {

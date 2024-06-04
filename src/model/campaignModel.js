@@ -1,5 +1,6 @@
 const nusatawanDB = require("../db/nusatawanDB");
-const { NotFoundError, BadRequestError } = require("../helper/customError");
+const { NotFoundError } = require("../helper/customError");
+const { findUserById } = require("./userModel");
 
 const campaign = nusatawanDB.campaign;
 
@@ -12,15 +13,10 @@ const findAllCampaign = async () => {
       image: true,
       createdAt: true,
       user: {
-        select: {
-          id: true,
-          username: true,
-        },
+        select: { id: true, username: true },
       },
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
   });
 };
 
@@ -36,10 +32,7 @@ const findCampaignById = async (id) => {
       image: true,
       createdAt: true,
       user: {
-        select: {
-          id: true,
-          username: true,
-        },
+        select: { id: true, username: true },
       },
     },
   });
@@ -50,6 +43,8 @@ const findCampaignById = async (id) => {
 };
 
 const createCampaign = async (newCampaignData) => {
+  await findUserById(newCampaignData.userId);
+
   return await campaign.create({
     data: {
       title: newCampaignData.title,
@@ -62,17 +57,9 @@ const createCampaign = async (newCampaignData) => {
 };
 
 const deleteCampaign = async (id) => {
-  const findId = await findCampaignById(id);
+  await findCampaignById(id);
 
-  if (!findId) throw new NotFoundError("Campaign id not found");
-
-  const data = await campaign.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  return data;
+  return await campaign.delete({ where: { id } });
 };
 
 module.exports = {
