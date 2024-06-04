@@ -14,13 +14,13 @@ const findAllCommentByArticleId = async (articleId) => {
   });
 };
 
-const createComment = async ({ comment, articleId, userId }) => {
+const createComment = async ({ comment: body, articleId, userId }) => {
   await findArticleById(articleId);
   await findUserById(userId);
 
   return await comment.create({
     data: {
-      comment: comment,
+      body: body,
       articleId: articleId,
       userId: userId,
       createdAt: new Date(),

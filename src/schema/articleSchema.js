@@ -30,12 +30,19 @@ const articleSchema = z.object({
 
   location: z
     .string({
-      required_error: "Location is required",
       invalid_type_error: "Location must be a string",
     })
     .trim()
     .min(1, { message: "Location is required." })
     .max(5000, { message: "Location length exceeds limit (5000 characters)" }),
+
+  categoryName: z
+    .string({
+      required_error: "Category is required",
+      invalid_type_error: "Category must be a string",
+    })
+    .min(1, { message: "Category is required." })
+    .max(25, { message: "Category length exceeds limit (25 characters)" }),
 
   userId: z
     .string({

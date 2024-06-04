@@ -7,9 +7,10 @@ dotenv.config();
 
 // Routes & middleware
 const userRoute = require("./routes/userRoute");
+const authRoute = require("./routes/authRoute");
 const campaignRoute = require("./routes/campaignRoute");
 const articleRoute = require("./routes/articleRoute");
-const authRoute = require("./routes/authRoute");
+const categoryRoute = require("./routes/categoryRoute");
 const errorHandler = require("./middleware/errorHandler");
 
 // APP
@@ -27,9 +28,10 @@ app.get("/", (req, res) => {
   res.send("Express  is running");
 });
 app.use("/users", userRoute);
+app.use("/auth", authRoute);
 app.use("/campaigns", campaignRoute);
 app.use("/articles", articleRoute);
-app.use("/auth", authRoute);
+app.use("/categories", categoryRoute);
 
 // Error handler last middleware
 app.use(errorHandler);
