@@ -79,10 +79,6 @@ const createArticle = async (newArticleData) => {
 const deleteArticle = async (id) => {
   await findArticleById(id);
 
-  // Remove constraint
-  await nusatawanDB.comment.deleteMany({ where: { articleId: id } });
-  await nusatawanDB.rating.deleteMany({ where: { articleId: id } });
-
   return await article.delete({ where: { id } });
 };
 

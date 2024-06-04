@@ -59,13 +59,6 @@ const updateUserAdmin = async (id, isAdmin) => {
 
 const deleteUser = async (id) => {
   await findUserById(id);
-
-  // Remove constraint
-  await nusatawanDB.comment.deleteMany({ where: { userId: id } });
-  await nusatawanDB.rating.deleteMany({ where: { userId: id } });
-  await nusatawanDB.article.deleteMany({ where: { userId: id } });
-  await nusatawanDB.campaign.deleteMany({ where: { userId: id } });
-
   return await user.delete({ where: { id } });
 };
 
