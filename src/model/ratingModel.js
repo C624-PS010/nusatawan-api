@@ -36,21 +36,17 @@ const findUserRating = async (articleId, userId) => {
 };
 
 const createRating = async (articleId, ratingValue, userId) => {
-  await findUserById(userId);
-  await findArticleById(articleId);
+  const existedRating = await findUserRating(articleId, userId);
 
-  try {
-    return await rating.create({
-      data: {
-        articleId,
-        rating: ratingValue,
-        userId,
-      },
-    });
-  } catch (error) {
-    console.error(`Error creating rating for article ${articleId} by user ${userId}:`, error);
-    throw error;
-  }
+  if (existedRating) await rating.delete({ where: { id: existedRating.id } });
+
+  return await rating.create({
+    data: {
+      articleId,
+      rating: ratingValue,
+      userId,
+    },
+  });
 };
 
 module.exports = {

@@ -1,9 +1,9 @@
+const { BadRequestError } = require("../helper/customError");
 const successResponse = require("../helper/successResponse");
 const {
   findAllRatingByArticleId,
   findAverageRating,
   findTotalUserRating,
-  findUserRating,
   createRating,
 } = require("../model/ratingModel");
 
@@ -54,24 +54,13 @@ const ratingController = {
       const { rating, userId } = req.body;
 
       // Check if rating is between 1 and 5
-      if (rating < 1 || rating > 5) {
-        return res.status(400).json(successResponse([], "Rating must be between 1 and 5"));
-      }
-
-      // Check if user already rated the article
-      const userRating = await findUserRating(articleId, userId);
-      if (userRating) {
-        return res.status(400).json(successResponse([], "User already rated this article"));
-      }
+      if (typeof rating != "number" || rating < 1 || rating > 5)
+        throw new BadRequestError("Rating must be number between 1 and 5");
 
       // Create a new rating
-      await createRating(articleId, rating, userId);
+      const userRating = await createRating(articleId, rating, userId);
 
-      return res.status(201).json({
-        success: true,
-        message: "Successfully added new rating",
-        data: { articleId, rating, userId },
-      });
+      return res.status(201).json(successResponse(userRating, "Successfully added rating"));
     } catch (error) {
       next(error);
     }

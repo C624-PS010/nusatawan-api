@@ -35,13 +35,13 @@ async function main() {
     // Menambahkan data kategori (Categories)
     await prisma.category.createMany({
       data: [
-        { name: "ekowisata", image: "public\\images\\categories\\ekowisata.jpg" },
-        { name: "pantai", image: "public\\images\\categories\\pantai.jpg" },
-        { name: "gunung", image: "public\\images\\categories\\gunung.jpg" },
-        { name: "laut", image: "public\\images\\categories\\laut.jpg" },
-        { name: "seni", image: "public\\images\\categories\\seni.jpg" },
-        { name: "religi", image: "public\\images\\categories\\religi.jpg" },
-        { name: "sejarah", image: "public\\images\\categories\\sejarah.jpg" },
+        { name: "ekowisata", image: "images/categories/ekowisata.jpg" },
+        { name: "pantai", image: "images/categories/pantai.jpg" },
+        { name: "gunung", image: "images/categories/gunung.jpg" },
+        { name: "laut", image: "images/categories/laut.jpg" },
+        { name: "seni", image: "images/categories/seni.jpg" },
+        { name: "religi", image: "images/categories/religi.jpg" },
+        { name: "sejarah", image: "images/categories/sejarah.jpg" },
       ],
     });
 
@@ -52,7 +52,7 @@ async function main() {
       data: {
         title: "Artikel 1",
         content: "Ini adalah konten dari artikel 1.",
-        image: "https://example.com/image1.jpg",
+        image: "images/articles/dummy_1.png",
         location: "Jakarta",
         categoryName: "ekowisata",
         userId: user1.id,
@@ -63,7 +63,7 @@ async function main() {
       data: {
         title: "Artikel 2",
         content: "Ini adalah konten dari artikel 2.",
-        image: "https://example.com/image2.jpg",
+        image: "images/articles/dummy_2.png",
         location: "Bandung",
         categoryName: "ekowisata",
         userId: user2.id,
@@ -78,13 +78,13 @@ async function main() {
         {
           title: "Kampanye 1",
           content: "Ini adalah konten dari kampanye 1.",
-          image: "https://example.com/campaign1.jpg",
+          image: "images/campaigns/dummy_1.png",
           userId: user1.id,
         },
         {
           title: "Kampanye 2",
           content: "Ini adalah konten dari kampanye 2.",
-          image: "https://example.com/campaign2.jpg",
+          image: "images/campaigns/dummy_1.png",
           userId: user2.id,
         },
       ],

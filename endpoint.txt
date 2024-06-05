@@ -1,0 +1,35 @@
+Authentication:
+POST    /auth/register
+POST    /auth/login
+
+Users:
+GET     /users?isAdmin
+GET     /users/:id
+PATCH   /users/role/:id
+DELETE  /users/:id
+
+Articles:
+GET     /articles?category&search
+GET     /articles/:id
+POST    /articles
+DELETE  /articles/:id
+
+Article's comments:
+GET     /articles/:id/comments
+POST    /articles/:id/comments
+DELETE  /articles/:id/comments/:id
+
+Article's rating:
+GET     /ratings/:id
+GET     /ratings/:id/average
+GET     /ratings/:id/total
+POST    /ratings/:id
+
+Campaign:
+GET     /campaigns
+GET     /campaigns/:id
+POST    /campaigns
+DELETE  /campaigns/:id
+
+RESPONSE BERHASIL: { error, message, data }
+RESPONSE GAGAL: { "error": true, "message": "Error message" }
