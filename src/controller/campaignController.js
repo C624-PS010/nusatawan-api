@@ -30,7 +30,6 @@ const campaignController = {
 
   addCampaign: async (req, res, next) => {
     try {
-      console.log(req.file);
       const { title, content, userId } = req.body;
       const image = req.file
         ? req.file.destination.replace(/^public\//, "") + "/" + req.file.filename
