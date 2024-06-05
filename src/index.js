@@ -1,11 +1,11 @@
-// Dependencies
+// Dependencies import
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 
-// Routes & middleware
+// Routes & middleware import
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const campaignRoute = require("./routes/campaignRoute");
@@ -16,7 +16,7 @@ const errorHandler = require("./middleware/errorHandler");
 
 // APP
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2024;
 
 // Middleware
 app.use(express.static("public"));
@@ -26,9 +26,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
+// Base URL
 app.get("/", (req, res) => {
-  res.send("Express  is running");
+  res.send(
+    "Welcome to <a href='https://github.com/C624-PS010/nusatawan-api'>Nusatawan API</a>! Visit our repository for documentation.",
+  );
 });
+// Endpoint
 app.use("/users", userRoute);
 app.use("/auth", authRoute);
 app.use("/campaigns", campaignRoute);
@@ -40,5 +44,9 @@ app.use("/categories", categoryRoute);
 // Error handler last middleware
 app.use(errorHandler);
 
-// Listen
-const server = app.listen(port, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
+// Start server
+try {
+  app.listen(port, () => console.log(`⭐️ Server ready at: http://localhost:${port}`));
+} catch (error) {
+  console.log(error);
+}

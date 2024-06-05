@@ -12,11 +12,10 @@ const commentController = {
 
       const comments = await findAllCommentByArticleId(id);
 
-      if (comments.length === 0) {
-        return res.status(200).json(successResponse(comments));
-      } else {
-        return res.status(200).json(successResponse(comments));
-      }
+      if (comments.length === 0)
+        res.status(200).json(successResponse(comments, "There is no comment yet"));
+
+      res.status(200).json(successResponse(comments));
     } catch (error) {
       next(error);
     }
@@ -29,7 +28,7 @@ const commentController = {
 
       const newComment = await createComment({ articleId, comment, userId });
 
-      res.status(201).json(successResponse(newComment));
+      res.status(201).json(successResponse(newComment, "Successfully added comment"));
     } catch (error) {
       next(error);
     }

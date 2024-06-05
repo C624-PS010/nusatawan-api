@@ -16,10 +16,16 @@ const findCommentById = async (id) => {
 const findAllCommentByArticleId = async (articleId) => {
   await findArticleById(articleId);
 
-  return await comment.findMany({
+  const data = await comment.findMany({
     where: { articleId },
+    include: { user: true },
     orderBy: { createdAt: "desc" },
   });
+
+  return data.map((comment) => ({
+    ...comment,
+    user: comment.user.username,
+  }));
 };
 
 const createComment = async ({ comment: body, articleId, userId }) => {
