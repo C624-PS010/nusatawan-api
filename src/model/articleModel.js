@@ -45,7 +45,14 @@ const findArticleById = async (id) => {
       user: {
         select: { id: true, username: true, email: true, phone: true },
       },
-      comments: true,
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          createdAt: true,
+          user: { select: { id: true, username: true } },
+        },
+      },
     },
   });
 

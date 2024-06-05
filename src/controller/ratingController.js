@@ -13,9 +13,8 @@ const ratingController = {
       const articleId = req.params.id;
       const ratings = await findAllRatingByArticleId(articleId);
 
-      if (!ratings.length) {
-        return res.status(404).json(successResponse([], "No ratings found for this article ID"));
-      }
+      if (ratings.length === 0)
+        res.status(200).json(successResponse([], "No ratings found for this article ID"));
 
       res.status(200).json(successResponse(ratings, "Success get all ratings by article id"));
     } catch (error) {

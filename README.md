@@ -156,7 +156,23 @@ Request body (JSON):
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "User role has been successfully updated",
+    data: { id, username, email, password, phone, isAdmin }
+
+#### Delete User
+
+Endpoint : `/users/:id`  
+Method : `PATCH`  
+Cookies : `user-token` `admin-token`
+
+Request body (JSON):
+
+    isAdmin: boolean
+
+Response (JSON):
+
+    error: false,
+    message: "User has been successfully removed",
     data: { id, username, email, password, phone, isAdmin }
 
 ### Categories
@@ -285,7 +301,7 @@ Request body (JSON):
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "Successfully added comment",
     data: { id, body, userId, articleId, createdAt }
 
 #### Delete comment
@@ -302,7 +318,7 @@ Request body (JSON):
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "Successfully deleted comment",
     data: { id, body, userId, articleId, createdAt }
 
 ### Rating
@@ -315,7 +331,7 @@ Method : `GET`
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "Success get all ratings by article id",
     data: { id, rating, userId, articleId }
 
 #### Get Average Ratings by Article ID
@@ -326,7 +342,7 @@ Method : `GET`
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "Success get average rating by article id",
     data: { _avg }
 
 #### Get Average Rating by Article ID
@@ -348,7 +364,7 @@ Method : `GET`
 Response (JSON):
 
     error: false,
-    message: "Success",
+    message: "Success get total user rating by article id",
     data: total
 
 #### Add rating
@@ -420,7 +436,7 @@ Request body (form-data):
 Response (JSON):
 
     error: false,
-    message: "Campaign has been successfully added",
+    message: "Campaign added successfully",
     data: {
         id, title, content, image, createdAt, userId
     }
@@ -464,11 +480,11 @@ Response: `image file`
 ### Developers
 
 - F2886YB202 – Adriansyah  
-   [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Sekonso)
+  [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Sekonso)
   [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adriansyah-anca-197270214)
 
 - F1976YB116 – Rizky  
-   [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Aerossky)
+  [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Aerossky)
   [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/risky-aerossky)
 
 ### Tech Stack
