@@ -1,4 +1,4 @@
-const { user } = require("../../db/nusatawanDB");
+const { user } = require("../../data/nusatawanDB");
 const { BadRequestError } = require("../../helper/customError");
 const ratingSchema = require("../../schema/ratingSchema");
 

@@ -12,6 +12,7 @@ const campaignRoute = require("./routes/campaignRoute");
 const articleRoute = require("./routes/articleRoute");
 const ratingRoute = require("./routes/ratingRoute");
 const categoryRoute = require("./routes/categoryRoute");
+const imageRoute = require("./routes/imageRoute");
 const errorHandler = require("./middleware/errorHandler");
 
 // APP
@@ -19,7 +20,6 @@ const app = express();
 const port = process.env.PORT || 2024;
 
 // Middleware
-app.use(express.static("public"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,6 +40,7 @@ app.use("/articles", articleRoute);
 app.use("/ratings", ratingRoute);
 app.use("/auth", authRoute);
 app.use("/categories", categoryRoute);
+app.use("/images", imageRoute);
 
 // Error handler last middleware
 app.use(errorHandler);

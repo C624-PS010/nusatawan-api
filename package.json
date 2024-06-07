@@ -8,8 +8,9 @@
     "dev": "nodemon src/index.js",
     "lint": "eslint ./src/ --fix",
     "format": "prettier --write ./src",
-    "migrate": "npx prisma migrate dev --name init",
-    "seed": "node prisma/seeder.js",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate dev --name init",
+    "seed": "node ./prisma/seeder.js",
     "populate-db": "npx prisma migrate dev --name init plus && node prisma/seeder.js"
   },
   "keywords": [
@@ -19,6 +20,8 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.14.0",
+    "@supabase/supabase-js": "^2.43.4",
+    "base64-arraybuffer": "^1.0.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

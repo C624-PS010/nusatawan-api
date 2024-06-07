@@ -1,4 +1,4 @@
-const nusatawanDB = require("../db/nusatawanDB");
+const nusatawanDB = require("../data/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
 const { findCategoryByName } = require("./categoryModel");
 const { findUserById } = require("./userModel");

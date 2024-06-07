@@ -1,4 +1,4 @@
-const nusatawanDB = require("../db/nusatawanDB");
+const nusatawanDB = require("../data/nusatawanDB");
 const { NotFoundError, BadRequestError } = require("../helper/customError");
 const { encrypt, decrypt } = require("../helper/encryption");
 
