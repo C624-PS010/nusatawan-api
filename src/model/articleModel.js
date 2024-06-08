@@ -67,9 +67,6 @@ const findArticleById = async (id) => {
 };
 
 const createArticle = async (newArticleData) => {
-  await findUserById(newArticleData.userId);
-  await findCategoryByName(newArticleData.categoryName);
-
   return await article.create({
     data: {
       title: newArticleData.title,

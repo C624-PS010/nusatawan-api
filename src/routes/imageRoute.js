@@ -1,14 +1,21 @@
 const { Router } = require("express");
-const multer = require("multer");
-const imageController = require("../controller/imageController");
+const { downloadImage } = require("../helper/imageHandler");
 
 const router = Router();
-// Store uploaded files in memory
 
-const storage = multer.memoryStorage();
-// Initialize multer with the storage configuration
-const upload = multer({ storage: storage });
+router.get("/:folder/:file", async (req, res, next) => {
+  try {
+    const { folder, file } = req.params;
 
-router.post("/", upload.single("image"), imageController.postArticleImage);
+    const data = await downloadImage(folder, file);
+
+    const imageData = await data.arrayBuffer();
+
+    res.setHeader("Content-Type", "image/png");
+    res.status(200).send(Buffer.from(imageData));
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

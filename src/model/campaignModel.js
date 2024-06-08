@@ -43,8 +43,6 @@ const findCampaignById = async (id) => {
 };
 
 const createCampaign = async (newCampaignData) => {
-  await findUserById(newCampaignData.userId);
-
   return await campaign.create({
     data: {
       title: newCampaignData.title,
