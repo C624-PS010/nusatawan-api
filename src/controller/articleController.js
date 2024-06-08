@@ -6,7 +6,7 @@ const {
 } = require("../model/articleModel");
 const successResponse = require("../helper/successResponse");
 const { findUserById } = require("../model/userModel");
-const { uploadImage } = require("../helper/imageHandler");
+const { uploadImage, deleteImage } = require("../helper/imageHandler");
 const { findCategoryByName } = require("../model/categoryModel");
 
 const articleController = {
@@ -62,10 +62,11 @@ const articleController = {
   removeArticle: async (req, res, next) => {
     try {
       const { id } = req.params;
-      // menunggu fungsi findArticleById selesai
       const data = await findArticleById(id);
-      // menunggu fungsi deleteArticle selesai
+
+      await deleteImage(data.image, "articles");
       await deleteArticle(id);
+
       res.status(200).json(successResponse(data, "Article deleted successfully"));
     } catch (error) {
       next(error);

@@ -6,7 +6,7 @@ const {
 } = require("../model/campaignModel");
 const successResponse = require("../helper/successResponse");
 const { findUserById } = require("../model/userModel");
-const { uploadImage } = require("../helper/imageHandler");
+const { uploadImage, deleteImage } = require("../helper/imageHandler");
 
 const campaignController = {
   getCampaign: async (req, res, next) => {
@@ -50,9 +50,12 @@ const campaignController = {
   removeCampaign: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deletedCampaign = await deleteCampaign(id);
+      const data = await findCampaignById(id);
 
-      res.status(200).json(successResponse(deletedCampaign, "Campaign deleted successfully"));
+      await deleteImage(data.image, "campaigns");
+      await deleteCampaign(id);
+
+      res.status(200).json(successResponse(data, "Campaign deleted successfully"));
     } catch (error) {
       next(error);
     }

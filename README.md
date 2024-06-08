@@ -1,8 +1,8 @@
-# Nusatawan API
+# NUSATAWAN API
 
 Backend REST API for Nusatawan project
 
-## Table of contents
+## TABLE OF CONTENTS
 
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -22,7 +22,7 @@ Backend REST API for Nusatawan project
   - [Developers](#developers)
   - [Tech Stack](#tech-stack)
 
-## Getting started
+## GETTING STARTED
 
 ### Installation
 
@@ -37,13 +37,20 @@ Install all the necessary packages using NPM.
 Assign value to all the necessary variable to environment variable, look at the reference in `.env.dev`
 
 `PORT`  
-`DATABASE_URL`  
+`DATABASE_URL`
+`DIRECT_URL`  
 `JWT_SECRET`  
 `JWT_ADMIN_SECRET`
+`SUPABASE_PROJECT_URL`
+`SUPABASE_ANON_KEY`
 
-### Database Setup
+### Database and Storage Setup
 
-Make sure that your MySQL service has been running, then do the migration and seeding using Prisma.
+This project uses PostgreSQL as a database, make sure that your PostgreSQL service has been running.
+
+We also uses supabase for clous storage, you have to also make sure to store all the necessary database and supabase environment variables first.
+
+After storing all the necessary database and the supabase information, do the migration and seeding using Prisma.
 
 ```bash
   npm run migrate
@@ -54,6 +61,12 @@ or
 
 ```bash
   npm run populate-db
+```
+
+Then generate the prisma client so you can use prisma's query engine inside your code
+
+```bash
+  npm run postinstall
 ```
 
 ### Run App
@@ -70,7 +83,7 @@ or
   npm run dev
 ```
 
-## API reference
+## API REFERENCE
 
 ### Base URL
 
@@ -461,21 +474,21 @@ Response (JSON):
 
 Endpoint : `/image/articles/:filename`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
 #### Get campaign's image
 
 Endpoint : `/image/campaigns/:filename`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
 #### Get category's image
 
 Endpoint : `/image/categories/:filename`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
-## About Us
+## ABOUT US
 
 ### Developers
 

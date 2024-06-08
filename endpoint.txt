@@ -31,5 +31,8 @@ GET     /campaigns/:id
 POST    /campaigns
 DELETE  /campaigns/:id
 
+Images:
+GET     /images/:folder/:file
+
 RESPONSE BERHASIL: { error, message, data }
 RESPONSE GAGAL: { "error": true, "message": "Error message" }

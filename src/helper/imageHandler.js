@@ -1,6 +1,6 @@
 const supabase = require("../data/supabase");
 const { decode } = require("base64-arraybuffer");
-const { CustomError } = require("../helper/customError");
+const { CustomError, BadRequestError } = require("../helper/customError");
 const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
 
@@ -28,8 +28,10 @@ const uploadImage = async (file, folder) => {
   return data.path;
 };
 
-const downloadImage = async (folder, file) => {
-  const { data, error } = await supabase.storage.from(`nusatawan-images/${folder}`).download(file);
+const downloadImage = async (file, folder) => {
+  const { data, error } = await supabase.storage
+    .from(`nusatawan-images`)
+    .download(`${folder}/${file}`);
 
   if (error) {
     throw new CustomError(error.status, error.message);
@@ -38,4 +40,16 @@ const downloadImage = async (folder, file) => {
   return data;
 };
 
-module.exports = { uploadImage, downloadImage };
+const deleteImage = async (file, folder) => {
+  const { data, error } = await supabase.storage
+    .from(`nusatawan-images`)
+    .remove(`${folder}/${file}`);
+
+  if (error) {
+    throw new CustomError(error.status, error.message);
+  }
+
+  return;
+};
+
+module.exports = { uploadImage, downloadImage, deleteImage };
