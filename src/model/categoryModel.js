@@ -10,7 +10,7 @@ const findAllCategories = async () => {
 
 const findCategoryByName = async (name) => {
   name = name.toLowerCase();
-  const data = await category.findUnique({ where: { name } });
+  const data = await category.findUnique({ where: { name }, include: { articles: true } });
 
   if (!data) throw new NotFoundError("Category not found");
 

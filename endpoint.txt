@@ -8,6 +8,10 @@ GET     /users/:id
 PATCH   /users/role/:id
 DELETE  /users/:id
 
+Categories:
+GET     /categories
+GET     /categories/:name
+
 Articles:
 GET     /articles?category&search
 GET     /articles/:id

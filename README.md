@@ -12,6 +12,7 @@ Backend REST API for Nusatawan project
 - [API Reference](#api-reference)
   - [Base URL](#base-url)
   - [Auth](#auth)
+  - [Users](#users)
   - [Categories](#categories)
   - [Articles](#articles)
   - [Rating](#rating)
@@ -94,8 +95,7 @@ or
 #### Register
 
 Endpoint : `/auth/register`  
-Method : `POST`  
-Res Cookies : `user-token`
+Method : `POST`
 
 Request body (JSON):
 
@@ -103,6 +103,8 @@ Request body (JSON):
     email: string
     password: string
     phone: string
+
+Response (Cookies) : `user-token`
 
 Response (JSON):
 
@@ -113,13 +115,14 @@ Response (JSON):
 #### Login
 
 Endpoint : `/auth/login`  
-Method : `POST`  
-Res Cookies : `user-token` `admin-token (if user is admin)`
+Method : `POST`
 
 Request body (JSON):
 
     email: string
     password: string
+
+Response (Cookies) : `user-token`
 
 Response (JSON):
 
@@ -132,8 +135,9 @@ Response (JSON):
 #### Get all Users
 
 Endpoint : `/users?isAdmin=boolean`  
-Method : `GET`  
-Req cookies : `user-token` `admin-token`
+Method : `GET`
+
+Request (cookies) : `user-token` `admin-token`
 
 Response (JSON):
 
@@ -147,8 +151,9 @@ Response (JSON):
 #### Get user by ID
 
 Endpoint : `/users/:id`  
-Method : `GET`  
-Cookies : `user-token` `admin-token`
+Method : `GET`
+
+Request (cookies) : `user-token`
 
 Response (JSON):
 
@@ -251,7 +256,8 @@ Response (JSON):
 
 Endpoint : `/articles`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (form-data):
 
@@ -273,8 +279,9 @@ Response (JSON):
 #### Delete Article
 
 Endpoint : `/articles/:id`  
-Method : `POST`  
-Req cookies: `user-token`
+Method : `POST`
+
+Request (Cookies): `user-token` 'admin-token'
 
 Response (form-data):
 
@@ -304,7 +311,8 @@ Response (JSON):
 
 Endpoint : `/articles/:id/comments`  
 Method : `GET`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (JSON):
 
@@ -321,7 +329,7 @@ Response (JSON):
 
 Endpoint : `/articles/:articleId/comments/:commentId`  
 Method : `GET`
-Req cookies: `user-token`
+Req cookies: `user-token` `admin-token`
 
 Request body (JSON):
 
@@ -384,7 +392,8 @@ Response (JSON):
 
 Endpoint : `/ratings/:id`  
 Method : `GET`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request Body (JSON):
 
@@ -437,7 +446,8 @@ Response (JSON):
 
 Endpoint : `/campaigns`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (form-data):
 
@@ -458,7 +468,8 @@ Response (JSON):
 
 Endpoint : `/campaigns`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token` 'admin-token'
 
 Response (JSON):
 
@@ -472,19 +483,19 @@ Response (JSON):
 
 #### Get article's image
 
-Endpoint : `/image/articles/:filename`  
+Endpoint : `/image/articles/:file`  
 Method : `GET`
 Response: image/png
 
 #### Get campaign's image
 
-Endpoint : `/image/campaigns/:filename`  
+Endpoint : `/image/campaigns/:file`  
 Method : `GET`
 Response: image/png
 
 #### Get category's image
 
-Endpoint : `/image/categories/:filename`  
+Endpoint : `/image/categories/:file`  
 Method : `GET`
 Response: image/png
 
