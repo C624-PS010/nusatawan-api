@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const ratingController = require("../controller/ratingController");
 const { ratingInputValidation } = require("../middleware/validation/ratingInputValidation");
+const { authenticate } = require("../middleware/checkAuth");
 
 const router = Router();
 
@@ -14,6 +15,6 @@ router.get("/:id/average", ratingController.getAverageRating);
 router.get("/:id/total", ratingController.getTotalUserRating);
 
 // POST a new rating for a specific article by ID
-router.post("/:id", ratingInputValidation, ratingController.addRating);
+router.post("/:id", authenticate, ratingInputValidation, ratingController.addRating);
 
 module.exports = router;
