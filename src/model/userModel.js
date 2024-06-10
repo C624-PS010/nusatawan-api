@@ -48,6 +48,14 @@ const createUser = async (newUserData) => {
   });
 };
 
+const checkUserAdmin = async (id) => {
+  await findUserById(id);
+
+  const data = await user.findUnique({ where: { id, isAdmin: true } });
+
+  if (!data) throw new NotFoundError("User is not admin");
+};
+
 const updateUserAdmin = async (id, isAdmin) => {
   await findUserById(id);
 
@@ -68,6 +76,7 @@ module.exports = {
   findUserById,
   findUserByEmailPassword,
   createUser,
+  checkUserAdmin,
   updateUserAdmin,
   deleteUser,
 };
