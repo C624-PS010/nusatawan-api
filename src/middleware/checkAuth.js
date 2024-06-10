@@ -6,14 +6,14 @@ const authenticate = (req, res, next) => {
     const token = req.cookies["user-token"];
 
     if (!token) {
-      next(new UnauthorizedError("Unauthorized access: token required"));
+      next(new UnauthorizedError("user-token cookie required"));
       return;
     }
 
     jwt.verify(token, process.env.JWT_SECRET);
     next();
   } catch (err) {
-    next(new UnauthorizedError("Unauthorized access: invalid token"));
+    next(new UnauthorizedError("user-token cookie required"));
   }
 };
 

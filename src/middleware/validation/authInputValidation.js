@@ -15,7 +15,7 @@ const registerInputValidation = (req, res, next) => {
     registerSchema.parse({ username, email, password, phone });
     next();
   } catch (error) {
-    next(new BadRequestError(error.errors[0].message || error.message));
+    next(new BadRequestError(error.errors ? error.errors[0].message : error.message));
   }
 };
 
@@ -32,7 +32,7 @@ const loginInputValidation = (req, res, next) => {
     loginSchema.parse({ email, password });
     next();
   } catch (error) {
-    next(new BadRequestError(error.errors[0].message || error.message));
+    next(new BadRequestError(error.errors ? error.errors[0].message : error.message));
   }
 };
 

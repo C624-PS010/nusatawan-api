@@ -20,7 +20,7 @@ const campaignInputValidation = (req, res, next) => {
       campaignSchema.parse({ title, content, userId });
       next();
     } catch (error) {
-      next(new BadRequestError(error.errors[0].message || "Validation failed", error.message));
+      next(new BadRequestError(error.errors ? error.errors[0].message : error.message));
     }
   });
 };
