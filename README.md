@@ -39,7 +39,6 @@ Assign value to all the necessary variable to environment variable, look at the 
 
 `PORT`  
 `DATABASE_URL`
-`DIRECT_URL`  
 `JWT_SECRET`  
 `JWT_ADMIN_SECRET`
 `SUPABASE_PROJECT_URL`
@@ -47,7 +46,7 @@ Assign value to all the necessary variable to environment variable, look at the 
 
 ### Database and Storage Setup
 
-This project uses PostgreSQL as a database, make sure that your PostgreSQL service has been running.
+This project uses MySQL as a database, make sure that your MySQL service has been running.
 
 We also uses supabase for clous storage, you have to also make sure to store all the necessary database and supabase environment variables first.
 
