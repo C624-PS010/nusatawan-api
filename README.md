@@ -88,7 +88,7 @@ or
 
 ### Base URL
 
-[nusatawan-api.com](localhost:2024)
+`http://103.150.92.104:2024/`
 
 ### Auth
 
