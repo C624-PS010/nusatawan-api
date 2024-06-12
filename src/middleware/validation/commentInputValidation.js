@@ -15,7 +15,7 @@ const commentInputValidation = (req, res, next) => {
     commentSchema.parse({ comment, userId, articleId });
     next();
   } catch (error) {
-    next(new BadRequestError(error.errors[0].message || error.message));
+    next(new BadRequestError(error.errors ? error.errors[0].message : error.message));
   }
 };
 

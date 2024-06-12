@@ -1,4 +1,4 @@
-const nusatawanDB = require("../db/nusatawanDB");
+const nusatawanDB = require("../data/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
 
 const category = nusatawanDB.category;
@@ -10,7 +10,7 @@ const findAllCategories = async () => {
 
 const findCategoryByName = async (name) => {
   name = name.toLowerCase();
-  const data = await category.findUnique({ where: { name } });
+  const data = await category.findUnique({ where: { name }, include: { articles: true } });
 
   if (!data) throw new NotFoundError("Category not found");
 

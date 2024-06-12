@@ -5,6 +5,9 @@ const {
   deleteArticle,
 } = require("../model/articleModel");
 const successResponse = require("../helper/successResponse");
+const { findUserById } = require("../model/userModel");
+const { uploadImage, deleteImage } = require("../helper/imageHandler");
+const { findCategoryByName } = require("../model/categoryModel");
 
 const articleController = {
   // Article controllers
@@ -34,10 +37,13 @@ const articleController = {
   addArticle: async (req, res, next) => {
     try {
       const { title, content, location, categoryName, userId } = req.body;
+      const imageFile = req.file;
 
-      const image = req.file
-        ? req.file.destination.replace(/^public\//, "") + "/" + req.file.filename
-        : "null"; // get the uploaded file path
+      await findUserById(userId);
+      await findCategoryByName(categoryName);
+
+      const image = await uploadImage(imageFile, "articles");
+
       const newArticle = await createArticle({
         title,
         content,
@@ -46,6 +52,7 @@ const articleController = {
         categoryName,
         userId,
       });
+
       res.status(201).json(successResponse(newArticle, "Article added successfully"));
     } catch (error) {
       next(error);
@@ -55,10 +62,11 @@ const articleController = {
   removeArticle: async (req, res, next) => {
     try {
       const { id } = req.params;
-      // menunggu fungsi findArticleById selesai
       const data = await findArticleById(id);
-      // menunggu fungsi deleteArticle selesai
+
+      await deleteImage(data.image, "articles");
       await deleteArticle(id);
+
       res.status(200).json(successResponse(data, "Article deleted successfully"));
     } catch (error) {
       next(error);

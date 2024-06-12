@@ -8,6 +8,10 @@ GET     /users/:id
 PATCH   /users/role/:id
 DELETE  /users/:id
 
+Categories:
+GET     /categories
+GET     /categories/:name
+
 Articles:
 GET     /articles?category&search
 GET     /articles/:id
@@ -30,6 +34,9 @@ GET     /campaigns
 GET     /campaigns/:id
 POST    /campaigns
 DELETE  /campaigns/:id
+
+Images:
+GET     /images/:folder/:file
 
 RESPONSE BERHASIL: { error, message, data }
 RESPONSE GAGAL: { "error": true, "message": "Error message" }

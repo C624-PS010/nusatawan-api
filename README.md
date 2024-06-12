@@ -1,8 +1,8 @@
-# Nusatawan API
+# NUSATAWAN API
 
 Backend REST API for Nusatawan project
 
-## Table of contents
+## TABLE OF CONTENTS
 
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -12,6 +12,7 @@ Backend REST API for Nusatawan project
 - [API Reference](#api-reference)
   - [Base URL](#base-url)
   - [Auth](#auth)
+  - [Users](#users)
   - [Categories](#categories)
   - [Articles](#articles)
   - [Rating](#rating)
@@ -22,7 +23,7 @@ Backend REST API for Nusatawan project
   - [Developers](#developers)
   - [Tech Stack](#tech-stack)
 
-## Getting started
+## GETTING STARTED
 
 ### Installation
 
@@ -37,13 +38,20 @@ Install all the necessary packages using NPM.
 Assign value to all the necessary variable to environment variable, look at the reference in `.env.dev`
 
 `PORT`  
-`DATABASE_URL`  
+`DATABASE_URL`
+`DIRECT_URL`  
 `JWT_SECRET`  
 `JWT_ADMIN_SECRET`
+`SUPABASE_PROJECT_URL`
+`SUPABASE_ANON_KEY`
 
-### Database Setup
+### Database and Storage Setup
 
-Make sure that your MySQL service has been running, then do the migration and seeding using Prisma.
+This project uses PostgreSQL as a database, make sure that your PostgreSQL service has been running.
+
+We also uses supabase for clous storage, you have to also make sure to store all the necessary database and supabase environment variables first.
+
+After storing all the necessary database and the supabase information, do the migration and seeding using Prisma.
 
 ```bash
   npm run migrate
@@ -54,6 +62,12 @@ or
 
 ```bash
   npm run populate-db
+```
+
+Then generate the prisma client so you can use prisma's query engine inside your code
+
+```bash
+  npm run postinstall
 ```
 
 ### Run App
@@ -70,19 +84,18 @@ or
   npm run dev
 ```
 
-## API reference
+## API REFERENCE
 
 ### Base URL
 
-[nusatawan-api.com](localhost:2024)
+`http://103.150.92.104:2024/`
 
 ### Auth
 
 #### Register
 
 Endpoint : `/auth/register`  
-Method : `POST`  
-Res Cookies : `user-token`
+Method : `POST`
 
 Request body (JSON):
 
@@ -90,6 +103,8 @@ Request body (JSON):
     email: string
     password: string
     phone: string
+
+Response (Cookies) : `user-token`
 
 Response (JSON):
 
@@ -100,13 +115,14 @@ Response (JSON):
 #### Login
 
 Endpoint : `/auth/login`  
-Method : `POST`  
-Res Cookies : `user-token` `admin-token (if user is admin)`
+Method : `POST`
 
 Request body (JSON):
 
     email: string
     password: string
+
+Response (Cookies) : `user-token`
 
 Response (JSON):
 
@@ -119,8 +135,9 @@ Response (JSON):
 #### Get all Users
 
 Endpoint : `/users?isAdmin=boolean`  
-Method : `GET`  
-Req cookies : `user-token` `admin-token`
+Method : `GET`
+
+Request (cookies) : `user-token` `admin-token`
 
 Response (JSON):
 
@@ -134,8 +151,9 @@ Response (JSON):
 #### Get user by ID
 
 Endpoint : `/users/:id`  
-Method : `GET`  
-Cookies : `user-token` `admin-token`
+Method : `GET`
+
+Request (cookies) : `user-token`
 
 Response (JSON):
 
@@ -238,7 +256,8 @@ Response (JSON):
 
 Endpoint : `/articles`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (form-data):
 
@@ -260,8 +279,9 @@ Response (JSON):
 #### Delete Article
 
 Endpoint : `/articles/:id`  
-Method : `POST`  
-Req cookies: `user-token`
+Method : `POST`
+
+Request (Cookies): `user-token` 'admin-token'
 
 Response (form-data):
 
@@ -291,7 +311,8 @@ Response (JSON):
 
 Endpoint : `/articles/:id/comments`  
 Method : `GET`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (JSON):
 
@@ -308,7 +329,7 @@ Response (JSON):
 
 Endpoint : `/articles/:articleId/comments/:commentId`  
 Method : `GET`
-Req cookies: `user-token`
+Req cookies: `user-token` `admin-token`
 
 Request body (JSON):
 
@@ -371,7 +392,8 @@ Response (JSON):
 
 Endpoint : `/ratings/:id`  
 Method : `GET`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request Body (JSON):
 
@@ -424,7 +446,8 @@ Response (JSON):
 
 Endpoint : `/campaigns`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token`
 
 Request body (form-data):
 
@@ -445,7 +468,8 @@ Response (JSON):
 
 Endpoint : `/campaigns`  
 Method : `POST`
-Req cookies: `user-token`
+
+Request (Cookies): `user-token` 'admin-token'
 
 Response (JSON):
 
@@ -459,23 +483,23 @@ Response (JSON):
 
 #### Get article's image
 
-Endpoint : `/image/articles/:filename`  
+Endpoint : `/image/articles/:file`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
 #### Get campaign's image
 
-Endpoint : `/image/campaigns/:filename`  
+Endpoint : `/image/campaigns/:file`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
 #### Get category's image
 
-Endpoint : `/image/categories/:filename`  
+Endpoint : `/image/categories/:file`  
 Method : `GET`
-Response: `image file`
+Response: image/png
 
-## About Us
+## ABOUT US
 
 ### Developers
 

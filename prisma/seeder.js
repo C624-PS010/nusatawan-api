@@ -35,13 +35,13 @@ async function main() {
     // Menambahkan data kategori (Categories)
     await prisma.category.createMany({
       data: [
-        { name: "ekowisata", image: "images/categories/ekowisata.jpg" },
-        { name: "pantai", image: "images/categories/pantai.jpg" },
-        { name: "gunung", image: "images/categories/gunung.jpg" },
-        { name: "laut", image: "images/categories/laut.jpg" },
-        { name: "seni", image: "images/categories/seni.jpg" },
-        { name: "religi", image: "images/categories/religi.jpg" },
-        { name: "sejarah", image: "images/categories/sejarah.jpg" },
+        { name: "ekowisata", image: "ekowisata" },
+        { name: "pantai", image: "pantai" },
+        { name: "gunung", image: "gunung" },
+        { name: "laut", image: "laut" },
+        { name: "seni", image: "seni" },
+        { name: "religi", image: "religi" },
+        { name: "sejarah", image: "sejarah" },
       ],
     });
 
@@ -52,7 +52,7 @@ async function main() {
       data: {
         title: "Artikel 1",
         content: "Ini adalah konten dari artikel 1.",
-        image: "images/articles/dummy_1.png",
+        image: "dummy_1",
         location: "Jakarta",
         categoryName: "ekowisata",
         userId: user1.id,
@@ -63,7 +63,7 @@ async function main() {
       data: {
         title: "Artikel 2",
         content: "Ini adalah konten dari artikel 2.",
-        image: "images/articles/dummy_2.png",
+        image: "dummy_2",
         location: "Bandung",
         categoryName: "ekowisata",
         userId: user2.id,
@@ -78,13 +78,13 @@ async function main() {
         {
           title: "Kampanye 1",
           content: "Ini adalah konten dari kampanye 1.",
-          image: "images/campaigns/dummy_1.png",
+          image: "dummy_1",
           userId: user1.id,
         },
         {
           title: "Kampanye 2",
           content: "Ini adalah konten dari kampanye 2.",
-          image: "images/campaigns/dummy_1.png",
+          image: "dummy_2",
           userId: user2.id,
         },
       ],

@@ -19,15 +19,6 @@ const articleSchema = z.object({
     .min(1, { message: "Content is required." })
     .max(5000, { message: "Content length exceeds limit (5000 characters)" }),
 
-  image: z
-    .string({
-      required_error: "Image is required",
-      invalid_type_error: "Image must be a string",
-    })
-    .trim()
-    .min(1, { message: "Image is required." })
-    .max(255, { message: "Image length exceeds limit (255 characters)" }),
-
   location: z
     .string({
       invalid_type_error: "Location must be a string",

@@ -5,6 +5,8 @@ const {
   deleteCampaign,
 } = require("../model/campaignModel");
 const successResponse = require("../helper/successResponse");
+const { findUserById } = require("../model/userModel");
+const { uploadImage, deleteImage } = require("../helper/imageHandler");
 
 const campaignController = {
   getCampaign: async (req, res, next) => {
@@ -31,10 +33,14 @@ const campaignController = {
   addCampaign: async (req, res, next) => {
     try {
       const { title, content, userId } = req.body;
-      const image = req.file
-        ? req.file.destination.replace(/^public\//, "") + "/" + req.file.filename
-        : "null"; // get the uploaded file path
+      const imageFile = req.file;
+
+      await findUserById(userId);
+
+      const image = await uploadImage(imageFile, "campaigns");
+
       const newCampaign = await createCampaign({ title, content, image, userId });
+
       res.status(201).json(successResponse(newCampaign, "Campaign added successfully"));
     } catch (error) {
       next(error);
@@ -44,9 +50,12 @@ const campaignController = {
   removeCampaign: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deletedCampaign = await deleteCampaign(id);
+      const data = await findCampaignById(id);
 
-      res.status(200).json(successResponse(deletedCampaign, "Campaign deleted successfully"));
+      await deleteImage(data.image, "campaigns");
+      await deleteCampaign(id);
+
+      res.status(200).json(successResponse(data, "Campaign deleted successfully"));
     } catch (error) {
       next(error);
     }

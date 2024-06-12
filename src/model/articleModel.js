@@ -1,4 +1,4 @@
-const nusatawanDB = require("../db/nusatawanDB");
+const nusatawanDB = require("../data/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
 const { findCategoryByName } = require("./categoryModel");
 const { findUserById } = require("./userModel");
@@ -67,9 +67,6 @@ const findArticleById = async (id) => {
 };
 
 const createArticle = async (newArticleData) => {
-  await findUserById(newArticleData.userId);
-  await findCategoryByName(newArticleData.categoryName);
-
   return await article.create({
     data: {
       title: newArticleData.title,

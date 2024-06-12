@@ -1,4 +1,4 @@
-const nusatawanDB = require("../db/nusatawanDB");
+const nusatawanDB = require("../data/nusatawanDB");
 const { NotFoundError } = require("../helper/customError");
 const { findUserById } = require("./userModel");
 
@@ -43,8 +43,6 @@ const findCampaignById = async (id) => {
 };
 
 const createCampaign = async (newCampaignData) => {
-  await findUserById(newCampaignData.userId);
-
   return await campaign.create({
     data: {
       title: newCampaignData.title,

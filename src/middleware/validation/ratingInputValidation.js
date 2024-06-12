@@ -1,4 +1,4 @@
-const { user } = require("../../db/nusatawanDB");
+const { user } = require("../../data/nusatawanDB");
 const { BadRequestError } = require("../../helper/customError");
 const ratingSchema = require("../../schema/ratingSchema");
 
@@ -20,7 +20,7 @@ const ratingInputValidation = (req, res, next) => {
     });
     next();
   } catch (error) {
-    next(new BadRequestError(error.errors[0].message || error.message));
+    next(new BadRequestError(error.errors ? error.errors[0].message : error.message));
   }
 };
 

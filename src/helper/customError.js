@@ -30,4 +30,4 @@ class ForbiddenError extends CustomError {
   }
 }
 
-module.exports = { NotFoundError, BadRequestError, UnauthorizedError, ForbiddenError };
+module.exports = { CustomError, NotFoundError, BadRequestError, UnauthorizedError, ForbiddenError };
