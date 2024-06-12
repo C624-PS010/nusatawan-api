@@ -1,15 +1,20 @@
 const supabase = require("../data/supabase");
 const { decode } = require("base64-arraybuffer");
-const { CustomError, BadRequestError } = require("../helper/customError");
-const sharp = require("sharp");
+const { CustomError } = require("../helper/customError");
+const Jimp = require("jimp");
 const { v4: uuidv4 } = require("uuid");
 
 const uploadImage = async (file, folder) => {
-  // Compress and resize the image using sharp
-  const compressedImageBuffer = await sharp(file.buffer)
-    .resize({ width: 800 }) // Resize the image to a maximum width of 800 pixels (adjust as needed)
-    .jpeg({ quality: 80 }) // Set JPEG quality to 80% (adjust as needed)
-    .toBuffer();
+  // Load the image using Jimp
+  const image = await Jimp.read(file.buffer);
+
+  // Resize and compress the image
+  image
+    .resize(800, Jimp.AUTO) // Resize the image to a maximum width of 800 pixels (adjust as needed)
+    .quality(80); // Set JPEG quality to 80% (adjust as needed)
+
+  // Get the compressed image buffer
+  const compressedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
   // decode file buffer to base64
   const fileBase64 = decode(compressedImageBuffer.toString("base64"));
