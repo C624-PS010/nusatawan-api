@@ -27,7 +27,7 @@ const registerSchema = z.object({
     .string({
       message: "Password must be string",
     })
-    .min(1, { message: "Password is required" })
+    .min(8, { message: "Password should contain atleast 8 characters" })
     .max(16, {
       message: "Password length exceed limit (16 characters)",
     })
