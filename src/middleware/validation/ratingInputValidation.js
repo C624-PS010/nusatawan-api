@@ -5,7 +5,7 @@ const ratingSchema = require("../../schema/ratingSchema");
 const ratingInputValidation = (req, res, next) => {
   const { id: articleId } = req.params;
   const { rating, userId } = req.body;
-  console.log(articleId);
+
   // Check requirement
   if (!articleId || !rating || !userId) {
     return next(new BadRequestError("Please provide all required fields"));

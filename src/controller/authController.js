@@ -8,11 +8,13 @@ const authController = {
       const { username, email, password, phone } = req.body;
       const newUser = await createUser({ username, email, password, phone });
 
-      const token = generateToken(newUser.id);
+      const token = {
+        userToken: generateToken(newUser.id),
+      };
 
-      res.cookie("user-token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-
-      res.status(201).json(successResponse(newUser, `User has been successfully registered`));
+      res
+        .status(201)
+        .json({ ...successResponse(newUser, `User has been successfully registered`), token });
     } catch (error) {
       next(error);
     }
@@ -23,17 +25,15 @@ const authController = {
       const { email, password } = req.body;
       const user = await findUserByEmailPassword(email, password);
 
-      const token = generateToken(user.id);
-      res.cookie("user-token", token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+      const token = {
+        userToken: generateToken(user.id),
+        adminToken: user.isAdmin ? generateAdminToken(user.id) : "",
+      };
 
-      if (user.isAdmin) {
-        const adminToken = generateAdminToken(user.id);
-        res.cookie("admin-token", adminToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-      }
-
-      res
-        .status(201)
-        .json(successResponse(user, `${user.username} has been successfully logged in`));
+      res.status(201).json({
+        ...successResponse(user, `${user.username} has been successfully logged in`),
+        token,
+      });
     } catch (error) {
       next(error);
     }
