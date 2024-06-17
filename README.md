@@ -38,17 +38,17 @@ Install all the necessary packages using NPM.
 Assign value to all the necessary variable to environment variable, look at the reference in `.env.dev`
 
 `PORT`  
-`DATABASE_URL`
+`DATABASE_URL`  
 `JWT_SECRET`  
-`JWT_ADMIN_SECRET`
-`SUPABASE_PROJECT_URL`
+`JWT_ADMIN_SECRET`  
+`SUPABASE_PROJECT_URL`  
 `SUPABASE_ANON_KEY`
 
 ### Database and Storage Setup
 
 This project uses MySQL as a database, make sure that your MySQL service has been running.
 
-We also uses supabase for clous storage, you have to also make sure to store all the necessary database and supabase environment variables first.
+We also uses supabase for storing images files, you have to also make sure to store all the necessary database and supabase environment variables first.
 
 After storing all the necessary database and the supabase information, do the migration and seeding using Prisma.
 
@@ -87,7 +87,7 @@ or
 
 ### Base URL
 
-`http://103.150.92.104:2024/`
+`https://nusatawan-api.vercel.app`
 
 ### Auth
 
@@ -103,13 +103,12 @@ Request body (JSON):
     password: string
     phone: string
 
-Response (Cookies) : `user-token`
-
 Response (JSON):
 
     error: false,
     message: "user has been successfully registered",
     data: { id, username, email, password, phone, isAdmin }
+    token: { userToken }
 
 #### Login
 
@@ -121,13 +120,12 @@ Request body (JSON):
     email: string
     password: string
 
-Response (Cookies) : `user-token`
-
 Response (JSON):
 
     error: false,
     message: "user1 has been successfully logged in",
     data: { id, username, email, password, phone, isAdmin }
+    token: { userToken, adminToken }
 
 ### Users
 
@@ -152,7 +150,10 @@ Response (JSON):
 Endpoint : `/users/:id`  
 Method : `GET`
 
-Request (cookies) : `user-token`
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Response (JSON):
 
@@ -163,8 +164,12 @@ Response (JSON):
 #### Change user role
 
 Endpoint : `/users/role/:id`  
-Method : `PATCH`  
-Cookies : `user-token` `admin-token`
+Method : `PATCH`
+
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Request body (JSON):
 
@@ -179,8 +184,12 @@ Response (JSON):
 #### Delete User
 
 Endpoint : `/users/:id`  
-Method : `PATCH`  
-Cookies : `user-token` `admin-token`
+Method : `DELETE`
+
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Request body (JSON):
 
@@ -256,7 +265,9 @@ Response (JSON):
 Endpoint : `/articles`  
 Method : `POST`
 
-Request (Cookies): `user-token`
+Request Headers :
+
+    auth-user: `Bearer token`
 
 Request body (form-data):
 
@@ -278,9 +289,12 @@ Response (JSON):
 #### Delete Article
 
 Endpoint : `/articles/:id`  
-Method : `POST`
+Method : `DELETE`
 
-Request (Cookies): `user-token` 'admin-token'
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Response (form-data):
 
@@ -309,9 +323,11 @@ Response (JSON):
 #### Add comment
 
 Endpoint : `/articles/:id/comments`  
-Method : `GET`
+Method : `POST`
 
-Request (Cookies): `user-token`
+Request Headers :
+
+    auth-user: `Bearer token`
 
 Request body (JSON):
 
@@ -327,8 +343,12 @@ Response (JSON):
 #### Delete comment
 
 Endpoint : `/articles/:articleId/comments/:commentId`  
-Method : `GET`
-Req cookies: `user-token` `admin-token`
+Method : `DELETE`
+
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Request body (JSON):
 
@@ -390,9 +410,11 @@ Response (JSON):
 #### Add rating
 
 Endpoint : `/ratings/:id`  
-Method : `GET`
+Method : `POST`
 
-Request (Cookies): `user-token`
+Request Headers :
+
+    auth-user: `Bearer token`
 
 Request Body (JSON):
 
@@ -446,7 +468,9 @@ Response (JSON):
 Endpoint : `/campaigns`  
 Method : `POST`
 
-Request (Cookies): `user-token`
+Request Headers :
+
+    auth-user: `Bearer token`
 
 Request body (form-data):
 
@@ -466,9 +490,12 @@ Response (JSON):
 #### Delete Campaign
 
 Endpoint : `/campaigns`  
-Method : `POST`
+Method : `DELETE`
 
-Request (Cookies): `user-token` 'admin-token'
+Request Headers :
+
+    auth-user: `Bearer token`
+    auth-admin: `Bearer token`
 
 Response (JSON):
 
@@ -504,10 +531,17 @@ Response: image/png
 
 - F2886YB202 – Adriansyah  
   [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Sekonso)
+  [![linkedin](https://img.shields.io/badge/instagram-purple?logo=instagram&logoColor=white)](https://www.instagram.com/ancaadri9)
   [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adriansyah-anca-197270214)
+
+- F1976YB116 – Aufaa Husniati  
+  [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/aufaahusniati)
+  [![linkedin](https://img.shields.io/badge/instagram-purple?logo=instagram&logoColor=white)](https://www.instagram.com/aufaahsnt)
+  [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aufaahusniati)
 
 - F1976YB116 – Rizky  
   [![Github](https://img.shields.io/badge/github-black?logo=github&logoColor=white)](https://github.com/Aerossky)
+  [![linkedin](https://img.shields.io/badge/instagram-purple?logo=instagram&logoColor=white)](https://www.instagram.com/risky_goh)
   [![linkedin](https://img.shields.io/badge/linkedin-blue?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/risky-aerossky)
 
 ### Tech Stack
@@ -520,3 +554,8 @@ Response: image/png
 [![eslint](https://img.shields.io/badge/eslint-1B222E?style=for-the-badge&logo=eslint&logoColor=white)](https://www.npmjs.com/package/eslint)
 [![prettier](https://img.shields.io/badge/prettier-1B222E?style=for-the-badge&logo=prettier&logoColor=white)](https://www.npmjs.com/package/prettier)
 [![postman](https://img.shields.io/badge/postman-1B222E?style=for-the-badge&logo=postman&logoColor=white)](https://www.npmjs.com/package/postman)
+
+### Repositories
+
+- [Front-End](https://github.com/C624-PS010/nusatawan-front-end)
+- [Back-End](https://github.com/C624-PS010/nusatawan-api)
